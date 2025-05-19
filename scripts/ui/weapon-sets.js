@@ -1,4 +1,5 @@
 export default class CosmereWeaponSets extends CONFIG.ARGON.WeaponSets {
-    async getDefaultSets() { return {}; }
-    async _onSetChange() { }
+    async _onSetChange({sets, active}) {
+        console.log(sets, active);
+    }
 }
