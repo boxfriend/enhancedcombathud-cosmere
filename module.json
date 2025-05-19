@@ -1,0 +1,33 @@
+{
+  "id": "enhancedcombathud-cosmere",
+  "title": "Argon - Combat HUD (COSMERE)",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Boxfriend",
+      "discord": "boxfriend",
+      "url": "https://github.com/boxfriend"
+    }
+  ],
+  "manifest": "https://raw.githubusercontent.com/boxfriend/enhancedcombathud-cosmere/refs/heads/main/module.json",
+  "download": "https://github.com/boxfriend/enhancedcombathud-cosmere/releases/latest/download/package.zip",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12"
+  },
+  "esmodules": ["scripts/main.js"],
+  "relationships": {
+    "systems": [
+      {
+        "id": "cosmere-rpg",
+        "type": "system"
+      }
+    ],
+    "requires": [
+      {
+        "id": "enhancedcombathud",
+        "type": "module"
+      }
+    ]
+  }
+}
