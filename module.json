@@ -9,7 +9,7 @@
       "url": "https://github.com/boxfriend"
     }
   ],
-  "manifest": "https://raw.githubusercontent.com/boxfriend/enhancedcombathud-cosmere/refs/heads/main/module.json",
+  "manifest": "https://raw.githubusercontent.com/boxfriend/enhancedcombathud-cosmere/refs/heads/master/module.json",
   "download": "https://github.com/boxfriend/enhancedcombathud-cosmere/releases/latest/download/package.zip",
   "compatibility": {
     "minimum": "12",
