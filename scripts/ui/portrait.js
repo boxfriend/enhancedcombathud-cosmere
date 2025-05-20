@@ -3,7 +3,7 @@ const ARGON = CONFIG.ARGON;
 export default class CosmerePortrait extends ARGON.PORTRAIT.PortraitPanel {
 
     get description() {
-        return this.actor.name;
+        return Object.values(this.actor.paths).map(path => path.name).join(", ");
     }
 
     async getStatBlocks() {
