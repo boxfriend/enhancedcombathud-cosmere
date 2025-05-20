@@ -2,7 +2,7 @@ import CosmerePortrait from "./ui/portrait.js";
 import CosmereSkillsDrawer from "./ui/drawer.js";
 import CosmereWeaponSets from "./ui/weapon-sets.js"
 import CosmereMovementHUD from "./ui/movement-hud.js";
-
+import CosmereRestButtons from "./ui/rest-buttons.js";
 
 Hooks.once("argonInit", (CoreHUD) => {
     console.log("Loading Cosmere Combat HUD");
@@ -12,5 +12,6 @@ Hooks.once("argonInit", (CoreHUD) => {
 
     CoreHUD.defineWeaponSets(CosmereWeaponSets);
     CoreHUD.defineMovementHud(CosmereMovementHUD);
+    CoreHUD.defineButtonHud(CosmereRestButtons);
     CoreHUD.defineSupportedActorTypes(["character", "adversary"]);
 });
