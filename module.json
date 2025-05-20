@@ -6,27 +6,32 @@
     {
       "name": "Boxfriend",
       "discord": "boxfriend",
-      "url": "https://github.com/boxfriend"
+      "url": "https://github.com/boxfriend",
+      "flags": {}
     }
   ],
-  "manifest": "https://raw.githubusercontent.com/boxfriend/enhancedcombathud-cosmere/refs/heads/master/module.json",
+  "manifest": "https://raw.githubusercontent.com/boxfriend/enhancedcombathud-cosmere/refs/heads/main/module.json",
   "download": "https://github.com/boxfriend/enhancedcombathud-cosmere/releases/latest/download/package.zip",
   "compatibility": {
     "minimum": "12",
     "verified": "12"
   },
-  "esmodules": ["scripts/main.js"],
+  "esmodules": [
+    "scripts/main.js"
+  ],
   "relationships": {
     "systems": [
       {
         "id": "cosmere-rpg",
-        "type": "system"
+        "type": "system",
+        "compatibility": {}
       }
     ],
     "requires": [
       {
         "id": "enhancedcombathud",
-        "type": "module"
+        "type": "module",
+        "compatibility": {}
       }
     ]
   }
