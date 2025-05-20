@@ -31,8 +31,10 @@ export default class CosmerePortrait extends ARGON.PORTRAIT.PortraitPanel {
 
     }
     async _getButtons() {
-        return [
-            {
+        const buttons = [];
+
+        if(game.combat){
+            buttons.push({
                 id: "toggle-speed",
                 icon: "fas fa-stopwatch",
                 label: "Toggle Turn Speed",
@@ -40,19 +42,22 @@ export default class CosmerePortrait extends ARGON.PORTRAIT.PortraitPanel {
                     const combatant = game.combat.getCombatantsByActor(this.actor)[0];
                     combatant?.toggleTurnSpeed();
                 },
-            },
-            {
-                id: "open-sheet",
-                icon: "fas fa-suitcase",
-                label: "Open Character Sheet",
-                onClick: (e) => this.actor.sheet.render(true),
-            },
-            {
-                id: "toggle-minimize",
-                icon: "fas fa-caret-down",
-                label: "Minimize",
-                onClick: (e) => ui.ARGON.toggleMinimize(),
-            },
-        ];
+            });
+        }
+
+        buttons.push({
+            id: "open-sheet",
+            icon: "fas fa-suitcase",
+            label: "Open Character Sheet",
+            onClick: (e) => this.actor.sheet.render(true),
+        },
+        {
+            id: "toggle-minimize",
+            icon: "fas fa-caret-down",
+            label: "Minimize",
+            onClick: (e) => ui.ARGON.toggleMinimize(),
+        });
+
+        return buttons;
     }
 }
