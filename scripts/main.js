@@ -10,10 +10,13 @@ Hooks.once("argonInit", (CoreHUD) => {
     console.log("Loading Cosmere Combat HUD");
     CoreHUD.definePortraitPanel(CosmerePortrait);
     CoreHUD.defineDrawerPanel(CosmereSkillsDrawer);
-    CoreHUD.defineMainPanels([CosmereStrikeHUD, CoreHUD.ARGON.PREFAB.PassTurnPanel]);
     CoreHUD.defineMainPanels([
         CosmereStrikeHUD,
         CosmereActionHUD,
+        class extends CosmereActionHUD { get actionCost() { return 2; } },
+        class extends CosmereActionHUD { get actionCost() { return 3; } },
+        class extends CosmereActionHUD { get actionType() { return 'fre'; } },
+        class extends CosmereActionHUD { get actionType() { return 'rea'; } },
         CoreHUD.ARGON.PREFAB.PassTurnPanel]);
 
     CoreHUD.defineWeaponSets(CosmereWeaponSets);
