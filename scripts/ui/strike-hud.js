@@ -12,7 +12,7 @@ class CosmereWeaponButton extends CONFIG.ARGON.MAIN.BUTTONS.ItemButton {
     }
 }
 
-export default class CosmereAttackHUD extends CONFIG.ARGON.MAIN.ActionPanel {
+export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get label() {
         return game.i18n.localize("COSMERE.Item.Weapon.Strike");
     }
