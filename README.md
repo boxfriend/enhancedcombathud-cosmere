@@ -12,7 +12,7 @@ This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.c
 ### Installation
 1. In Foundry VTT navigate to the Add-on Modules
 2. Select Install Module then paste the following URL into the Manifest URL input
-   `https://raw.githubusercontent.com/boxfriend/enhancedcombathud-cosmere/refs/heads/main/module.json`
+   `https://raw.githubusercontent.com/boxfriend/enhancedcombathud-cosmere/refs/heads/master/module.json`
 3. Click Install
 4. Inside a game world using the Cosmere RPG system manage modules and enable `Argon - Combat HUD (COSMERE-RPG)`
 
