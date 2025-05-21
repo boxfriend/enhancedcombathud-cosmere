@@ -14,7 +14,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get label() {
         switch(this.actionType) {
             case 'act':
-                return this._getActionLabel();
+                return "▶".repeat(this.actionCost);
             case 'fre':
                 return "▷";
             case 'rea':
@@ -24,13 +24,6 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
         }
     }
 
-    _getActionLabel() {
-        let label = "";
-        for(let i = 0; i < this.actionCost; i++)
-            label += "▶";
-
-        return label;
-    }
     async _getButtons() {
         let actions = this.actor.items?.filter(
             item => {
