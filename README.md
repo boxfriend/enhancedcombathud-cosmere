@@ -2,6 +2,8 @@
 
 This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.com/packages/enhancedcombathud/) module along with the [Cosmere RPG System](https://github.com/the-metalworks/cosmere-rpg) for the Foundry VTT.
 
+![Example showcasing the layout of the HUD](/imgs/example.png "Example")
+
 ### Compatability
 - Foundry VTT v12
 - Argon - Combat HUD (CORE) v4.0.3
@@ -22,7 +24,6 @@ This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.c
 - Buttons to toggle an actor's combat turn speed as well as open character sheet are located directly above the portrait
 - While combat is not in progress buttons to rest are located next to the actor portrait
 - The list of known skills is in a dropdown menu above the portrait to easily roll a skill
-![Example showcasing the layout of the HUD](/imgs/example.png "Example")
 
 
 ### TODO
