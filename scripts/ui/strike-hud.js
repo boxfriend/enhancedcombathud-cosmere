@@ -10,6 +10,27 @@ class CosmereWeaponButton extends CONFIG.ARGON.MAIN.BUTTONS.ItemButton {
     async _onLeftClick(event) {
         this.actor.useItem(this.item);
     }
+
+    get hasTooltip() { return true; }
+
+    async getTooltipData() {
+        const system = this.item.system.attack;
+        const type = system.type.capitalize();
+        let subtitle = game.i18n.localize(`COSMERE.Attack.Type.${type}`);
+
+        if (type === 'Ranged') {
+            const range = system.range;
+            subtitle += ` (${range.value}${range.unit} / ${range.long}${range.unit})`;
+        }
+
+        const description = this.item.system.description;
+        return {
+            title: this.item.name,
+            subtitle: subtitle,
+            description: description.chat || description.short || description.value,
+        }
+    }
+
 }
 
 export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {

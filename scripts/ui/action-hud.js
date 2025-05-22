@@ -5,6 +5,17 @@ class CosmereItemButton extends BUTTONS.ItemButton {
     async _onLeftClick(event) {
         this.actor.useItem(this.item);
     }
+
+    get hasTooltip() { return true; }
+
+    async getTooltipData() {
+        const description = this.item.system.description;
+        return {
+            title: this.item.name,
+            subtitle: game.i18n.localize(`COSMERE.Item.Type.${this.item.type.capitalize()}.label`),
+            description: description.chat || description.short || description.value,
+        }
+    }
 }
 
 export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
