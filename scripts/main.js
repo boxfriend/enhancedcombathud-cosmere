@@ -25,9 +25,12 @@ Hooks.once("argonInit", (CoreHUD) => {
     CoreHUD.defineSupportedActorTypes(["character", "adversary"]);
 });
 
-Object.defineProperty(String.prototype, 'capitalize', {
-    value: function() {
-        return this.charAt(0).toUpperCase() + this.slice(1);
-    },
-    enumerable: false,
-});
+if(!String.prototype.hasOwnProperty('capitalize')) {
+    Object.defineProperty(String.prototype, 'capitalize', {
+        value: function () {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        },
+        enumerable: false,
+        writable: false,
+    });
+}
