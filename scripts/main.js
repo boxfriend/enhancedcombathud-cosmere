@@ -5,6 +5,7 @@ import CosmereMovementHUD from "./ui/movement-hud.js";
 import CosmereRestButtons from "./ui/rest-buttons.js";
 import CosmereStrikeHUD from "./ui/strike-hud.js";
 import CosmereActionHUD from "./ui/action-hud.js";
+import { findBasicActions } from "./utilities.js";
 
 Hooks.once("argonInit", (CoreHUD) => {
     console.log("Loading Cosmere Combat HUD");
@@ -24,6 +25,8 @@ Hooks.once("argonInit", (CoreHUD) => {
     CoreHUD.defineButtonHud(CosmereRestButtons);
     CoreHUD.defineSupportedActorTypes(["character", "adversary"]);
 });
+
+Hooks.once("ready", findBasicActions);
 
 if(!String.prototype.hasOwnProperty('capitalize')) {
     Object.defineProperty(String.prototype, 'capitalize', {
