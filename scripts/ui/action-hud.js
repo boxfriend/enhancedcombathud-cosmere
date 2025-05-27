@@ -1,3 +1,5 @@
+import { BASIC_ACTIONS } from '../utilities.js';
+
 const BUTTONS = CONFIG.ARGON.MAIN.BUTTONS;
 
 class CosmereItemButton extends BUTTONS.ItemButton {
@@ -35,17 +37,17 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
         }
     }
 
-    async _getButtons() {
-        let actions = this.actor.items?.filter(
-            item => {
-                const system = item.system;
-                return system.activation?.cost?.type === this.actionType
-                    && item.type !== 'weapon' && item.name !== 'Strike';
-            });
+    #getActionsFilter(item) {
+        const system = item.system;
+        return system.activation?.cost?.type === this.actionType
+            && item.type !== 'weapon' && item.name !== 'Strike'
+            && (this.actionType !== 'act' || (this.actionType === 'act'
+                && system.activation?.cost?.value === this.actionCost));
+    }
 
-        if(this.actionType == 'act')
-            actions = actions.filter(
-                item => item.system.activation?.cost?.value === this.actionCost);
+    async _getButtons() {
+        let actions = this.actor.items?.filter(this.#getActionsFilter.bind(this));
+        actions = BASIC_ACTIONS.filter(this.#getActionsFilter.bind(this)).concat(actions);
 
         if(actions && actions.length === 1)
             return [new CosmereItemButton({
@@ -53,6 +55,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
                 inActionPanel: true,
             })];
 
+        actions = this.#filterDuplicates(actions);
         if(actions && actions.length % 2 !== 0)
             actions.push(null);
 
@@ -76,6 +79,15 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
         }
 
         return splitButtons;
+    }
+
+    #filterDuplicates(array) {
+        const set = new Set();
+        return array.filter(item => {
+            if(set.has(item.name)) return false;
+            set.add(item.name);
+            return true;
+        });
     }
 
     get template() { return new CONFIG.ARGON.MAIN.ActionPanel().template; }
