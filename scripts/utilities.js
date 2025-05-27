@@ -1,4 +1,8 @@
+import data from '../module.json' assert { type: 'json' };
+
 export const BASIC_ACTIONS = [];
+export const MODULE_ID = data.id;
+
 
 export async function findBasicActions() {
     for(const pack of game.packs.filter(x => x.metadata.type === "Item")) {
@@ -12,3 +16,4 @@ export async function findBasicActions() {
         }
     }
 }
+
