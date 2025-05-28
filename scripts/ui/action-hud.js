@@ -1,4 +1,4 @@
-import { BASIC_ACTIONS, MODULE_ID } from '../utilities.js';
+import { COMPENDIUM_BASIC_ACTIONS, MODULE_ID } from '../utilities.js';
 
 const BUTTONS = CONFIG.ARGON.MAIN.BUTTONS;
 
@@ -50,7 +50,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
 
         const includeBasic = game.settings.get(MODULE_ID, "includeBasicActions");
         if(includeBasic)
-            actions = BASIC_ACTIONS.filter(this.#getActionsFilter.bind(this)).concat(actions);
+            actions = COMPENDIUM_BASIC_ACTIONS.filter(this.#getActionsFilter.bind(this)).concat(actions);
 
         if(actions && actions.length === 1)
             return [new CosmereItemButton({

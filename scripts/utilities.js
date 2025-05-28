@@ -1,4 +1,5 @@
-export const BASIC_ACTIONS = [];
+export const COMPENDIUM_BASIC_ACTIONS = [];
+export const WORLD_BASIC_ACTIONS = [];
 export const MODULE_ID = "enhancedcombathud-cosmere-rpg";
 
 export default async function setupUtilities() {
@@ -13,7 +14,7 @@ export async function findBasicActions() {
             if(document.type === 'action') {
                 const action = await pack.getDocument(document._id);
                 if(action.system.type === 'basic')
-                    BASIC_ACTIONS.push(action);
+                    COMPENDIUM_BASIC_ACTIONS.push(action);
             }
         }
     }
