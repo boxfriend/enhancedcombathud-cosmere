@@ -7,20 +7,27 @@ import CosmereStrikeHUD from "./ui/strike-hud.js";
 import CosmereActionHUD from "./ui/action-hud.js";
 import setupUtilities from "./utilities.js";
 import registerSettings from "./settings.js";
+import { MODULE_ID } from "./utilities.js";
 
 Hooks.once("argonInit", (CoreHUD) => {
     console.log("Loading Cosmere Combat HUD");
     CoreHUD.definePortraitPanel(CosmerePortrait);
     CoreHUD.defineDrawerPanel(CosmereSkillsDrawer);
-    CoreHUD.defineMainPanels([
+
+    const mainPanels = [
         CosmereStrikeHUD,
         CosmereActionHUD,
         class extends CosmereActionHUD { get actionCost() { return 2; } },
         class extends CosmereActionHUD { get actionCost() { return 3; } },
         class extends CosmereActionHUD { get actionType() { return 'fre'; } },
         class extends CosmereActionHUD { get actionType() { return 'rea'; } },
-        CoreHUD.ARGON.PREFAB.PassTurnPanel]);
+        ];
 
+    const includePassTurn = game.settings.get(MODULE_ID, "includePassTurn"); //TODO: Make this a setting
+    if(includePassTurn)
+        mainPanels.push(CoreHUD.ARGON.PREFAB.PassTurnPanel);
+
+    CoreHUD.defineMainPanels(mainPanels);
     CoreHUD.defineWeaponSets(CosmereWeaponSets);
     CoreHUD.defineMovementHud(CosmereMovementHUD);
     CoreHUD.defineButtonHud(CosmereRestButtons);
