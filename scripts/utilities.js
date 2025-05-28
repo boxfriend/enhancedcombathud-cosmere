@@ -2,8 +2,9 @@ export const COMPENDIUM_BASIC_ACTIONS = [];
 export const WORLD_BASIC_ACTIONS = [];
 export const MODULE_ID = "enhancedcombathud-cosmere-rpg";
 
-export default async function setupUtilities() {
-    findBasicActions();
+export default function setupUtilities() {
+    findCompendiumActions();
+    findWorldActions();
     //TODO: other setup here
 }
 
