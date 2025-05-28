@@ -1,7 +1,5 @@
-import data from '../module.json' assert { type: 'json' };
-
 export const BASIC_ACTIONS = [];
-export const MODULE_ID = data.id;
+export const MODULE_ID = "enhancedcombathud-cosmere-rpg";
 
 export default async function setupUtilities() {
     findBasicActions();
