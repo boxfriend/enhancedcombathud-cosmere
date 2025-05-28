@@ -8,7 +8,7 @@ export default function setupUtilities() {
     //TODO: other setup here
 }
 
-export async function findBasicActions() {
+async function findCompendiumActions() {
     for(const pack of game.packs.filter(x => x.metadata.type === "Item")) {
         for(const document of pack._getVisibleTreeContents())
         {
@@ -19,5 +19,10 @@ export async function findBasicActions() {
             }
         }
     }
+}
+
+function findWorldActions() {
+    const items = game.items.filter(x => x.type === 'action' && x.system.type === 'basic');
+    WORLD_BASIC_ACTIONS.push(...items);
 }
 
