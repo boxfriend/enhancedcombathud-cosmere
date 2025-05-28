@@ -34,10 +34,9 @@ Hooks.once("argonInit", (CoreHUD) => {
     CoreHUD.defineSupportedActorTypes(["character", "adversary"]);
 });
 
-Hooks.once("ready", () => {
-    setupUtilities();
-    registerSettings();
-});
+//Gotta make sure settings are registered before the argon stuff is invoked
+Hooks.once("init", registerSettings);
+Hooks.once("ready", setupUtilities);
 
 
 if(!String.prototype.hasOwnProperty('capitalize')) {
