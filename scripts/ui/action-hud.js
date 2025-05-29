@@ -19,6 +19,25 @@ class CosmereItemButton extends BUTTONS.ItemButton {
         }
     }
 }
+class RemovableMacroButton extends BUTTONS.MacroButton {
+    constructor({ macro, parent, inActionPanel=undefined}) {
+        super({macro, inActionPanel});
+        this.parentLabel = parent;
+    }
+
+    async _onRightClick(event) {
+        const macro = game.macros.get(this.macro.id);
+        console.log("event", event, macro, this.parent);
+        if(macro) {
+            const macros = this.actor.getFlag(MODULE_ID, `macros.${this.parentLabel}`) || [];
+            console.log(`macros.${this.parentLabel}`, macros);
+            macros.splice(macros.indexOf(macro.id), 1);
+            console.log(`macros.${this.parentLabel}`, macros);
+            await this.actor.setFlag(MODULE_ID, `macros.${this.parentLabel}`, macros);
+            await this.parent.parent.render();
+        }
+    }
+}
 
 export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get actionCost() { return 1; }
@@ -55,6 +74,9 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
         const includeWorld = game.settings.get(MODULE_ID, "includeWorldBasicActions");
         if(includeWorld)
             actions = WORLD_BASIC_ACTIONS.filter(this.#getActionsFilter.bind(this)).concat(actions);
+        actions = this.#filterDuplicates(actions);
+        const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
+        actions.push(...macros.map(id => game.macros.get(id)));
 
         if(actions && actions.length === 1)
             return [new CosmereItemButton({
@@ -62,20 +84,28 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
                 inActionPanel: true,
             })];
 
-        actions = this.#filterDuplicates(actions);
         if(actions && actions.length % 2 !== 0)
             actions.push(null);
 
         const buttons = [];
 
         actions.forEach(item => {
-            if(item)
-                buttons.push(new CosmereItemButton({
-                    item: item,
-                    inActionPanel: true,
-                }));
-            else
+            if(item) {
+                if (item.type === 'action') {
+                    buttons.push(new CosmereItemButton({
+                        item: item,
+                        inActionPanel: true,
+                    }));
+                } else {
+                    buttons.push(new RemovableMacroButton({
+                        macro: item,
+                        inActionPanel: true,
+                        parent: this.label,
+                    }));
+                }
+            } else {
                 buttons.push(new BUTTONS.ActionButton());
+            }
         });
 
         const splitButtons = [];
@@ -98,5 +128,30 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     }
 
     get template() { return new CONFIG.ARGON.MAIN.ActionPanel().template; }
+    async activateListeners(html) {
+        super.activateListeners(html);
+        this.element.addEventListener("drop", this._onDrop.bind(this));
+
+    }
+
+    async _onDrop(event) {
+        console.log("drop", event);
+        try {
+            event.preventDefault();
+            event.stopPropagation();
+            const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+            console.log("data", data);
+            if (data?.type !== "Macro") return;
+            const macro = game.macros.get(data.uuid.replace("Macro.", ""));
+            console.log("macro", data.uuid, macro);
+            if(macro) {
+                const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
+                macros.push(macro.id);
+                console.log(`macros.${this.label}`, macro, macros);
+                await this.actor.setFlag(MODULE_ID, `macros.${this.label}`, macros);
+                await this.render();
+            }
+        } catch (error) { console.log(error); }
+    }
 }
 
