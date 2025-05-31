@@ -1,4 +1,5 @@
 import { MODULE_ID } from './utilities.js';
+import UnhideActionsForm from './ui/unhide-actions-form.js';
 
 export default function registerSettings() {
     game.settings.register(MODULE_ID, "includeBasicActions", {
@@ -29,5 +30,13 @@ export default function registerSettings() {
         default: true,
         type: Boolean,
         requiresReload: true,
+    });
+
+    game.settings.registerMenu(MODULE_ID, "unhideActions", {
+        name: "Remove Hidden Actions",
+        label: "Unhide Actions",
+        icon: "fa-solid fa-bars",
+        type: UnhideActionsForm,
+        restricted: false,
     });
 }
