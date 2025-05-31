@@ -1,0 +1,10 @@
+<div>
+    {{#each actorData}}
+        <h4>{{name}}</h4>
+        {{#each items}}
+            <input type="checkbox" id="{{id}}" name="{{../id}}" value="{{id}}">
+            <label for="{{id}}">{{name}}</label>
+            <br>
+        {{/each}}
+    {{/each}}
+</div>
