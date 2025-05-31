@@ -18,6 +18,17 @@ class CosmereItemButton extends BUTTONS.ItemButton {
             description: description.chat || description.short || description.value,
         }
     }
+
+    async _onRightClick(event) {
+        const item = this.item.id;
+        const hidden = this.actor.getFlag(MODULE_ID, "hiddenItems") || [];
+        if(!hidden.includes(item)) {
+            hidden.push(item);
+            await this.actor.setFlag(MODULE_ID, "hiddenItems", hidden);
+            console.log("hidden", hidden);
+        }
+        await this.parent.parent.render();
+    }
 }
 class RemovableMacroButton extends BUTTONS.MacroButton {
     constructor({ macro, parent, inActionPanel=undefined}) {
@@ -58,10 +69,15 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
 
     #getActionsFilter(item) {
         const system = item.system;
-        return system.activation?.cost?.type === this.actionType
+        return !this.#isHidden(item) && system.activation?.cost?.type === this.actionType
             && item.type !== 'weapon' && item.name !== 'Strike'
             && (this.actionType !== 'act' || (this.actionType === 'act'
                 && system.activation?.cost?.value === this.actionCost));
+    }
+
+    #isHidden(item) {
+        const hidden = this.actor.getFlag(MODULE_ID, "hiddenItems") || [];
+        return hidden.includes(item.id);
     }
 
     async _getButtons() {
