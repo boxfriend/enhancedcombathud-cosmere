@@ -51,7 +51,28 @@ export default class UnhideActionsForm extends HandlebarsApplicationMixin(Applic
     }
 
     static async handleForm(event, form, data) {
+        const actors = data.keys();
+        for(const actor of actors) {
+            const gameActor = game.actors.get(actor);
+            const hidden = gameActor.getFlag(MODULE_ID, "hiddenItems") || [];
+            const itemData = data.getAll(actor)[0];
+            console.log("itemData", itemData);
+            if(itemData.startsWith("[")) {
+                const itemIDs = JSON.parse(itemData);
+                for (const itemID of itemIDs) {
+                    UnhideActionsForm.#remove(hidden, itemID);
+                }
+            } else {
+                UnhideActionsForm.#remove(hidden, itemData);
+            }
+            await gameActor.setFlag(MODULE_ID, "hiddenItems", hidden);
+            ui.ARGON.refresh();
+        }
+    }
 
+    static #remove(array, value) {
+        if(array.includes(value))
+            array.splice(array.indexOf(value), 1);
     }
 
 }
