@@ -58,7 +58,6 @@ export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
             inActionPanel: true,
         }));
 
-        console.log("buttons", buttons);
         return buttons;
     }
 

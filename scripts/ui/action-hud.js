@@ -27,7 +27,6 @@ class CosmereItemButton extends BUTTONS.ItemButton {
         if(!hidden.includes(item)) {
             hidden.push(item);
             await this.actor.setFlag(MODULE_ID, "hiddenItems", hidden);
-            console.log("hidden", hidden);
         }
         await this.parent.parent.render();
     }
@@ -40,12 +39,9 @@ class RemovableMacroButton extends BUTTONS.MacroButton {
 
     async _onRightClick(event) {
         const macro = game.macros.get(this.macro.id);
-        console.log("event", event, macro, this.parent);
         if(macro) {
             const macros = this.actor.getFlag(MODULE_ID, `macros.${this.parentLabel}`) || [];
-            console.log(`macros.${this.parentLabel}`, macros);
             macros.splice(macros.indexOf(macro.id), 1);
-            console.log(`macros.${this.parentLabel}`, macros);
             await this.actor.setFlag(MODULE_ID, `macros.${this.parentLabel}`, macros);
             await this.parent.parent.render();
         }
@@ -158,14 +154,11 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
             event.preventDefault();
             event.stopPropagation();
             const data = JSON.parse(event.dataTransfer.getData("text/plain"));
-            console.log("data", data);
             if (data?.type !== "Macro") return;
             const macro = game.macros.get(data.uuid.replace("Macro.", ""));
-            console.log("macro", data.uuid, macro);
             if(macro) {
                 const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
                 macros.push(macro.id);
-                console.log(`macros.${this.label}`, macro, macros);
                 await this.actor.setFlag(MODULE_ID, `macros.${this.label}`, macros);
                 await this.render();
             }
