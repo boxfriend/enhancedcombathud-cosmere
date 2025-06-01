@@ -33,7 +33,10 @@ export default class UnhideActionsForm extends HandlebarsApplicationMixin(Applic
             const hidden = actor.getFlag(MODULE_ID, "hiddenItems") || [];
             const items = [];
             for(const item of hidden) {
-                const itemData = game.items.get(item);
+                const itemData = actor.items.get(item)
+                    || game.items.get(item)
+                    || await this.#getItemFromCompendium(item);
+
                 items.push({
                     id: item,
                     name: itemData.name
@@ -53,6 +56,16 @@ export default class UnhideActionsForm extends HandlebarsApplicationMixin(Applic
                 { type: "submit", icon: "fa-solid fa-save", label: "Unhide Selected" },
             ]
         }
+    }
+
+    async #getItemFromCompendium(itemID) {
+        console.log("itemID", itemID);
+        const compendium = game.packs.find(p => p.metadata.type === "Item"
+            && p._getVisibleTreeContents().find(c => c._id === itemID));
+        if(!compendium)
+            return;
+
+        return await compendium.getDocument(itemID);
     }
 
     static async handleForm(event, form, data) {
