@@ -3,11 +3,16 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 export default class UnhideActionsForm extends HandlebarsApplicationMixin(ApplicationV2) {
     static DEFAULT_OPTIONS = {
+        ...super.DEFAULT_OPTIONS,
         tag: "form",
         form: {
             handler: this.handleForm,
             submitOnChange: false,
             closeOnSubmit: true,
+        },
+        window: {
+            title: "Unhide Actions",
+            contentClasses: ["standard-form"]
         }
     };
 
