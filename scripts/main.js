@@ -48,3 +48,5 @@ if(!String.prototype.hasOwnProperty('capitalize')) {
         writable: false,
     });
 }
+
+Handlebars.registerHelper('isChecked', (checked) => checked ? "checked" : "");

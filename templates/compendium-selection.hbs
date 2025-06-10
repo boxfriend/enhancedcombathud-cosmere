@@ -1,0 +1,7 @@
+<div>
+    {{#each compendiums}}
+        <input type="checkbox" id="{{id}}" name="{{id}}" value="{{id}}" {{isChecked checked}}>
+        <label for="{{id}}">{{name}}</label>
+        <br>
+    {{/each}}
+</div>
