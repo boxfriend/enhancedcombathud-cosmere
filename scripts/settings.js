@@ -1,5 +1,6 @@
 import { MODULE_ID } from './utilities.js';
 import UnhideActionsForm from './ui/unhide-actions-form.js';
+import CompendiumSelectionForm from './ui/compendium-selection-form.js';
 
 export default function registerSettings() {
     game.settings.register(MODULE_ID, "includeBasicActions", {
@@ -38,5 +39,18 @@ export default function registerSettings() {
         icon: "fa-solid fa-bars",
         type: UnhideActionsForm,
         restricted: false,
+    });
+
+    game.settings.registerMenu(MODULE_ID, "selectCompendiums", {
+        name: "Select Included Compendiums",
+        label: "Select Compendiums",
+        icon: "fa-solid fa-bars",
+        type: CompendiumSelectionForm,
+        restricted: false,
+    });
+
+    game.settings.register(MODULE_ID, "selectedCompendiums", {
+        config: false,
+        scope: "client",
     });
 }
