@@ -40,7 +40,6 @@ function findWorldActions() {
 export function findCompendiums() {
     ITEM_COMPENDIUMS.clear();
     const compendiums = game.packs.filter(x => x.metadata.type === "Item" && x._getVisibleTreeContents().find(y => y.type === 'action'));
-    console.log("Found Item Compendiums", compendiums);
     for(const c of compendiums) {
         ITEM_COMPENDIUMS.add(c.metadata.id);
     }
