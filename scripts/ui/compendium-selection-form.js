@@ -50,7 +50,24 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
     }
 
     static async handleForm(event, form, data) {
+        const formData = data.values();
+        const selected = [];
+        for(const values of formData) {
+            const ids = CompendiumSelectionForm.#parseValues(values).filter(x => x);
+            selected.push(...ids);
+        }
 
+        game.settings.set(MODULE_ID, "selectedCompendiums", selected);
+        await findCompendiumActions();
+        ui.ARGON.refresh();
+    }
 
+    static #parseValues(data) {
+        try {
+            const arr = JSON.parse(data);
+            return arr;
+        } catch (e) {
+            return [data];
+        }
     }
 }
