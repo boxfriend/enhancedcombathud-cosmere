@@ -24,9 +24,10 @@ This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.c
 - Buttons to toggle an actor's combat turn speed as well as open character sheet are located directly above the portrait
 - While combat is not in progress buttons to rest are located next to the actor portrait
 - The list of known skills is in a dropdown menu above the portrait to easily roll a skill
-
+- Enriched tooltips when hovering over an action!
+- Optionally exclude compendiums and world actions from being included
 
 ### TODO
 - Implement action cost tracking when using actions during combat
-- Tooltips to provide information about actions on hover
+- ~~Tooltips to provide information about actions on hover~~ Completed!
 - . . . and more?
