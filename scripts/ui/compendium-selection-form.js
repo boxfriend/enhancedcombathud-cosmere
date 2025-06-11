@@ -28,7 +28,7 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
     async _prepareContext(options) {
         const compendiums = [];
         const saved = game.settings.get(MODULE_ID, "selectedCompendiums") || ITEM_COMPENDIUMS;
-        console.log("rendering compendium selection...");
+
         for(const id of ITEM_COMPENDIUMS) {
             const compendium = game.packs.get(id);
             if(!compendium) continue;
