@@ -15,6 +15,7 @@ export async function findCompendiumActions() {
     const packIDs = game.settings.get(MODULE_ID, "selectedCompendiums") || ITEM_COMPENDIUMS;
     for(const packID of packIDs) {
         const pack = game.packs.get(packID);
+        if(!pack) continue;
         for(const document of pack._getVisibleTreeContents())
         {
             if(document.type === 'action') {
