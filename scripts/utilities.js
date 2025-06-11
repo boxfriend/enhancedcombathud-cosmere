@@ -10,8 +10,10 @@ export default function setupUtilities() {
     //TODO: other setup here
 }
 
-async function findCompendiumActions() {
-    for(const pack of game.packs.filter(x => x.metadata.type === "Item")) {
+export async function findCompendiumActions() {
+    const packIDs = game.settings.get(MODULE_ID, "selectedCompendiums") || ITEM_COMPENDIUMS;
+    for(const packID of packIDs) {
+        const pack = game.packs.get(packID);
         for(const document of pack._getVisibleTreeContents())
         {
             if(document.type === 'action') {
