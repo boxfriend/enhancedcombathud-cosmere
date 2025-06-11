@@ -54,6 +54,7 @@ export default class UnhideActionsForm extends HandlebarsApplicationMixin(Applic
             actorData,
             buttons: [
                 { type: "submit", icon: "fa-solid fa-save", label: "Unhide Selected" },
+                { type: "cancel", icon: "fa-solid fa-cancel", label: "Cancel" },
             ]
         }
     }
