@@ -31,6 +31,8 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
         console.log("rendering compendium selection...");
         for(const id of ITEM_COMPENDIUMS) {
             const compendium = game.packs.get(id);
+            if(!compendium) continue;
+
             compendiums.push({
                 name: compendium.metadata.label,
                 id,
