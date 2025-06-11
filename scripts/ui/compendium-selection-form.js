@@ -33,10 +33,11 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
             const compendium = game.packs.get(id);
             if(!compendium) continue;
 
+            const checked = Array.isArray(saved) ? saved.includes(id) : saved.has(id);
             compendiums.push({
                 name: compendium.metadata.label,
                 id,
-                checked: saved.includes(id)
+                checked,
             });
         }
         return {
