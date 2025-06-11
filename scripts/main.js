@@ -7,7 +7,7 @@ import CosmereStrikeHUD from "./ui/strike-hud.js";
 import CosmereActionHUD from "./ui/action-hud.js";
 import setupUtilities from "./utilities.js";
 import registerSettings from "./settings.js";
-import { MODULE_ID } from "./utilities.js";
+import { MODULE_ID, refreshAllActions } from "./utilities.js";
 
 Hooks.once("argonInit", (CoreHUD) => {
     console.log("Loading Cosmere Combat HUD");
@@ -38,6 +38,15 @@ Hooks.once("argonInit", (CoreHUD) => {
 Hooks.once("init", registerSettings);
 Hooks.once("ready", setupUtilities);
 
+Hooks.on("renderSettingsConfig", (app, html, data) => {
+    html = html instanceof jQuery ? html[0] : html;
+    const thing = html.querySelector(`section[data-tab=${MODULE_ID}]`);
+    thing.insertAdjacentHTML("beforeend",
+        `<button id="${MODULE_ID}.refresh" title="Refreshes all cached actions and compendiums." style="flex:1"><i class="fa-solid fa-arrows-rotate"></i><label>Refresh All Actions</label></button>
+         <p class="notes">Refreshes all cached compendiums and actions. Useful if you have added or removed actions or compendiums and want to refresh Argon.</p>                
+    `);
+    html.querySelector(`button[id="${MODULE_ID}.refresh"]`).addEventListener("click", (event) => { refreshAllActions(); ui.ARGON.refresh(); });
+});
 
 if(!String.prototype.hasOwnProperty('capitalize')) {
     Object.defineProperty(String.prototype, 'capitalize', {
