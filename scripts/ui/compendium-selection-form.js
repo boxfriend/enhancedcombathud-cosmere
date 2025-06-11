@@ -1,4 +1,4 @@
-import { MODULE_ID, ITEM_COMPENDIUMS, findCompendiumActions } from "../utilities.js";
+import { MODULE_ID, ITEM_COMPENDIUMS, findCompendiums, findCompendiumActions } from "../utilities.js";
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -47,6 +47,10 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
                 { type: "cancel", icon: "fa-solid fa-cancel", label: "Cancel" },
             ]
         }
+    }
+
+    _onRender(context, options) {
+        this.element.querySelector("button[type=button]").addEventListener("click", (event) => { findCompendiums(); console.log("refreshed"); });
     }
 
     static async handleForm(event, form, data) {
