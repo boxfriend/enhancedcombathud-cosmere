@@ -4,10 +4,14 @@ export const MODULE_ID = "enhancedcombathud-cosmere-rpg";
 export const ITEM_COMPENDIUMS = new Set();
 
 export default function setupUtilities() {
-    findCompendiums();
-    findCompendiumActions();
-    findWorldActions();
+    refreshAllActions();
     //TODO: other setup here
+}
+
+export async function refreshAllActions() {
+    findCompendiums();
+    findWorldActions();
+    await findCompendiumActions();
 }
 
 export async function findCompendiumActions() {
