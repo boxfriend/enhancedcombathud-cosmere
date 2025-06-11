@@ -43,14 +43,15 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
             compendiums,
             buttons: [
                 { type: "submit", icon: "fa-solid fa-save", label: "Save Selected" },
-                { type: "button", icon: "fa-solid fa-arrows-rotate", label: "Refresh List" },
+                { type: "button", icon: "fa-solid fa-arrows-rotate", label: "Refresh List", name: `${MODULE_ID}.refresh` },
                 { type: "cancel", icon: "fa-solid fa-cancel", label: "Cancel" },
             ]
         }
     }
 
     _onRender(context, options) {
-        this.element.querySelector("button[type=button]").addEventListener("click", (event) => { findCompendiums(); console.log("refreshed"); });
+        const thing = this.element.querySelector(`button[type="button"][name="${MODULE_ID}.refresh"]`)
+            .addEventListener("click", (event) => { findCompendiums(); this.render(); });
     }
 
     static async handleForm(event, form, data) {
