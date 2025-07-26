@@ -1,13 +1,13 @@
 # Argon - Combat HUD (COSMERE-RPG)
 
-This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.com/packages/enhancedcombathud/) module along with the [Cosmere RPG System](https://github.com/the-metalworks/cosmere-rpg) for the Foundry VTT.
+This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.com/packages/enhancedcombathud/) module along with the [Cosmere RPG System](https://foundryvtt.com/packages/cosmere-rpg) for the Foundry VTT.
 
 ![Example showcasing the layout of the HUD](/imgs/example.png "Example")
 
 ### Compatability
-- Foundry VTT v12
+- ![](https://img.shields.io/badge/Foundry-v12-informational)
 - Argon - Combat HUD (CORE) v4.0.3
-- Cosmere RPG v0.3.1
+- Cosmere RPG v1.0.0
 
 ### Installation
 1. In Foundry VTT navigate to the Add-on Modules
