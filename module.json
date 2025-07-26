@@ -1,7 +1,7 @@
 {
   "id": "enhancedcombathud-cosmere-rpg",
   "title": "Argon - Combat HUD (COSMERE-RPG)",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "authors": [
     {
       "name": "Boxfriend",
@@ -26,7 +26,8 @@
         "id": "cosmere-rpg",
         "type": "system",
         "compatibility": {
-          "verified": "0.3.1"
+          "minimum": "0.3.1",
+          "verified": "1.0.0"
         }
       }
     ],
