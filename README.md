@@ -5,9 +5,9 @@ This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.c
 ![Example showcasing the layout of the HUD](/imgs/example.png "Example")
 
 ### Compatability
-- ![](https://img.shields.io/badge/Foundry-v12-informational)
-- Argon - Combat HUD (CORE) v4.0.3
-- Cosmere RPG v1.0.0
+- ![Foundry v12](https://img.shields.io/badge/Foundry-v12-green)
+- ![Argon - Combat HUD(CORE)](https://img.shields.io/badge/enhancedcombathud%E2%80%93core-v4.0.3-green)
+- ![Cosmere RPG](https://img.shields.io/badge/cosmere%E2%80%93rpg-v1.0.0-green)
 
 ### Installation
 1. In Foundry VTT navigate to the Add-on Modules
