@@ -8,26 +8,34 @@ export default class CosmerePortrait extends ARGON.PORTRAIT.PortraitPanel {
 
     async getStatBlocks() {
         const system = this.actor.system;
-        return [
+        const stats = [
             [
                 { text: "HP:" },
-                { text: system.resources.hea.value },
-                { text: "/" },
-                { text: system.resources.hea.max.value }
+                {
+					text: `${system.resources.hea.value} / ${system.resources.hea.max.value}`,
+					color: "#286f3e"
+				},
             ],
             [
                 { text: "Foc:" },
-                { text: system.resources.foc.value },
-                { text: "/" },
-                { text: system.resources.foc.max.value }
+                {
+					text: `${system.resources.foc.value} / ${system.resources.foc.max.value}`,
+					color: "#6e45e4"
+				},
             ],
-            [
-                { text: "Inv:" },
-                { text: system.resources.inv.value },
-                { text: "/" },
-                { text: system.resources.inv.max.value }
-            ]
         ];
+
+		if(system.resources.inv.max.value > 0) {
+			stats.push([
+                { text: "Inv:" },
+                {
+					text: `${system.resources.inv.value} / ${system.resources.inv.max.value}`,
+					color: "#3e6abb"
+				},
+            ]);
+		}
+		
+		return stats;
 
     }
     async _getButtons() {
