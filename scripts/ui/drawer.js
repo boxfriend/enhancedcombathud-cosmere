@@ -5,7 +5,7 @@ export default class CosmereSkillsDrawer extends ARGON.DRAWER.DrawerPanel {
         super(...args);
     }
 
-    get title() { return game.i18n.localize("COSMERE.Actor.Skill.label_p"); }
+    get title() { return `${game.i18n.localize("COSMERE.Actor.Attribute.name_plural")} / ${game.i18n.localize("COSMERE.Actor.Skill.label_p")}`; }
 
     get categories() {
         const skills = CONFIG.COSMERE.skills;
@@ -23,15 +23,35 @@ export default class CosmereSkillsDrawer extends ARGON.DRAWER.DrawerPanel {
             }]));
         }
 
+        const attributes = CONFIG.COSMERE.attributes;
+        const actorAttributes = this.actor.system.attributes;
+        const attrButtons = [];
+        for(const attr in attributes) {
+            attrButtons.push(new ARGON.DRAWER.DrawerButton([{
+                label: game.i18n.localize(attributes[attr].label),
+                onClick: () => {
+                    this.actor.rollSkill(skill);
+                }
+            }]));
+        }
+
         return [{
             captions: [
                 {
-                    label: game.i18n.localize("COSMERE.Actor.Skill.label"),
-                    align: "center",
+                    label: game.i18n.localize("COSMERE.Actor.Skill.label_p"),
+                    align: "left",
                 }
             ],
-            align: ["left"],
             buttons: skillButtons,
+        },
+        {
+            captions: [
+                {
+                    label: game.i18n.localize("COSMERE.Actor.Attribute.name_plural"),
+                    align: "left",
+                }
+            ],
+            buttons: attrButtons,
         }];
     }
 }
