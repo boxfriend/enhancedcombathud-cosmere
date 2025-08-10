@@ -1,4 +1,4 @@
-# Argon - Combat HUD (COSMERE-RPG)
+# [Argon - Combat HUD (COSMERE-RPG)](https://foundryvtt.com/packages/enhancedcombathud-cosmere-rpg)
 
 This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.com/packages/enhancedcombathud/) module along with the [Cosmere RPG System](https://foundryvtt.com/packages/cosmere-rpg) for the Foundry VTT.
 
@@ -8,14 +8,6 @@ This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.c
 - ![Foundry v12](https://img.shields.io/badge/Foundry-v12-green)
 - ![Argon - Combat HUD(CORE)](https://img.shields.io/badge/enhancedcombathud%E2%80%93core-v4.0.3-green)
 - ![Cosmere RPG](https://img.shields.io/badge/cosmere%E2%80%93rpg-v1.0.0-green)
-
-### Installation
-1. In Foundry VTT navigate to the Add-on Modules
-2. Select Install Module then paste the following URL into the Manifest URL input
-   `https://raw.githubusercontent.com/boxfriend/enhancedcombathud-cosmere/refs/heads/master/module.json`
-3. Click Install
-4. Inside a game world using the Cosmere RPG system manage modules and enable `Argon - Combat HUD (COSMERE-RPG)`
-
 
 ### Features
 - Weapon sets allow you to manage equipping different sets of weapons as well as provides clickable actions to roll the dice for those weapons in a convenient "Strike" action panel
