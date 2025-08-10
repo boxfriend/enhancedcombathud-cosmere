@@ -154,6 +154,7 @@ jobs:
         with:
           url: 'https://foundryvtt.com/_api/packages/release_version/'
           method: 'POST'
+          preventFailureOnNoResponse: true
           customHeaders: >-
             {
               "Content-Type": "application/json",
