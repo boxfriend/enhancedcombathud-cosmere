@@ -105,7 +105,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
 
         actions.forEach(item => {
             if(item) {
-                if (item.type === 'action') {
+                if (item.type !== 'script' || item.type !== 'chat') {
                     buttons.push(new CosmereItemButton({
                         item: item,
                         inActionPanel: true,
