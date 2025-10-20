@@ -4,7 +4,7 @@ export default class CosmereWeaponSets extends CONFIG.ARGON.WeaponSets {
 
         for(const id in sets) {
             const set = sets[id];
-
+            const isActive = id === active;
             const primary = set["primary"]?.system;
             const secondary = set["secondary"]?.system;
 
