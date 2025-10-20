@@ -60,6 +60,8 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
                 return "▷";
             case 'rea':
                 return "↩";
+            case 'spe':
+                return "★";
             default:
                 return "UNKNOWN";
         }

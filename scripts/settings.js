@@ -23,6 +23,16 @@ export default function registerSettings() {
         onChange: () => ui.ARGON.refresh(),
     });
 
+    game.settings.register(MODULE_ID, "includeSpePanel", {
+        name: "Include Special Actions Panel",
+        hint: "Include a panel that allows the player to activate special actions. REQUIRES REFRESH",
+        scope: "client",
+        config: true,
+        default: true,
+        type: Boolean,
+        requiresReload: true,
+    });
+
     game.settings.register(MODULE_ID, "includePassTurn", {
         name: "Include Pass Turn Panel",
         hint: "Include a panel that allows the player to pass their turn during combat. REQUIRES REFRESH",

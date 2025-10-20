@@ -23,6 +23,10 @@ Hooks.once("argonInit", (CoreHUD) => {
         class extends CosmereActionHUD { get actionType() { return 'rea'; } },
         ];
 
+    const includeSpeActions = game.settings.get(MODULE_ID, "includeSpePanel");
+    if(includeSpeActions)
+        mainPanels.push(class extends CosmereActionHUD { get actionType() { return 'spe'; } })
+
     const includePassTurn = game.settings.get(MODULE_ID, "includePassTurn"); //TODO: Make this a setting
     if(includePassTurn)
         mainPanels.push(CoreHUD.ARGON.PREFAB.PassTurnPanel);
