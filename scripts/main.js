@@ -47,15 +47,3 @@ Hooks.on("renderSettingsConfig", (app, html, data) => {
     `);
     html.querySelector(`button[id="${MODULE_ID}.refresh"]`).addEventListener("click", (event) => { refreshAllActions(); ui.ARGON.refresh(); });
 });
-
-if(!String.prototype.hasOwnProperty('capitalize')) {
-    Object.defineProperty(String.prototype, 'capitalize', {
-        value: function () {
-            return this.charAt(0).toUpperCase() + this.slice(1);
-        },
-        enumerable: false,
-        writable: false,
-    });
-}
-
-Handlebars.registerHelper('isChecked', (checked) => checked ? "checked" : "");

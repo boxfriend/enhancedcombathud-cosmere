@@ -6,6 +6,19 @@ export const ITEM_COMPENDIUMS = new Set();
 export default function setupUtilities() {
     refreshAllActions();
     //TODO: other setup here
+
+
+    if(!String.prototype.hasOwnProperty('capitalize')) {
+        Object.defineProperty(String.prototype, 'capitalize', {
+            value: function () {
+                return this.charAt(0).toUpperCase() + this.slice(1);
+            },
+            enumerable: false,
+            writable: false,
+        });
+    }
+
+    Handlebars.registerHelper('isChecked', (checked) => checked ? "checked" : "");
 }
 
 export async function refreshAllActions() {
