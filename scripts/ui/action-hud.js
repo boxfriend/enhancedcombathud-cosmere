@@ -83,13 +83,14 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     async _getButtons() {
         let actions = this.actor.items?.filter(this.#getActionsFilter.bind(this));
 
+        const includeWorld = game.settings.get(MODULE_ID, "includeWorldBasicActions");
+        if(includeWorld)
+            actions = actions.concat(Array.from(WORLD_BASIC_ACTIONS).filter(this.#getActionsFilter.bind(this)));
+
         const includeBasic = game.settings.get(MODULE_ID, "includeBasicActions");
         if(includeBasic)
             actions = actions.concat(Array.from(COMPENDIUM_BASIC_ACTIONS).filter(this.#getActionsFilter.bind(this)));
 
-        const includeWorld = game.settings.get(MODULE_ID, "includeWorldBasicActions");
-        if(includeWorld)
-            actions = actions.concat(Array.from(WORLD_BASIC_ACTIONS).filter(this.#getActionsFilter.bind(this)));
         actions = this.#filterDuplicates(actions);
         const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
         actions.push(...macros.map(id => game.macros.get(id)));
