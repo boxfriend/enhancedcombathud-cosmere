@@ -76,4 +76,14 @@ export default function registerSettings() {
         config: false,
         scope: override ? "world" : "client",
     });
+
+    game.settings.register(MODULE_ID, "showEmptyPanel", {
+        name: "Show Empty Panels",
+        hint: "Displays action panels when no actions present.",
+        scope: override ? "world" : "client",
+        config: true,
+        default: false,
+        type: Boolean,
+        onChange: () => ui.ARGON.refresh(),
+    });
 }

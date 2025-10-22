@@ -132,6 +132,10 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
             splitButtons.push(new BUTTONS.SplitButton(first, second));
         }
 
+        if(splitButtons.length === 0) {
+            const showEmpty = game.settings.get(MODULE_ID, "showEmptyPanel");
+            if(showEmpty) splitButtons.push(new BUTTONS.ActionButton());
+        }
         return splitButtons;
     }
 
