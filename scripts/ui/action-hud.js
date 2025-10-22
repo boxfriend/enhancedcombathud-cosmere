@@ -1,52 +1,7 @@
 import { COMPENDIUM_BASIC_ACTIONS, WORLD_BASIC_ACTIONS, MODULE_ID } from '../utilities.js';
+import { CosmereItemButton, RemovableMacroButton } from './ActionButtons.js'
 
 const BUTTONS = CONFIG.ARGON.MAIN.BUTTONS;
-
-class CosmereItemButton extends BUTTONS.ItemButton {
-
-    async _onLeftClick(event) {
-        this.actor.useItem(this.item);
-    }
-
-    get hasTooltip() { return true; }
-
-    async getTooltipData() {
-        const description = this.item.system.description;
-        let descriptionData = description.chat || description.short || description.value;
-        descriptionData = await TextEditor.enrichHTML(descriptionData, { relativeTo: this.actor });
-        return {
-            title: this.item.name,
-            subtitle: game.i18n.localize(`COSMERE.Item.Type.${this.item.type.capitalize()}.label`),
-            description: descriptionData,
-        }
-    }
-
-    async _onRightClick(event) {
-        const item = this.item.id;
-        const hidden = this.actor.getFlag(MODULE_ID, "hiddenItems") || [];
-        if(!hidden.includes(item)) {
-            hidden.push(item);
-            await this.actor.setFlag(MODULE_ID, "hiddenItems", hidden);
-        }
-        await this.parent.parent.render();
-    }
-}
-class RemovableMacroButton extends BUTTONS.MacroButton {
-    constructor({ macro, parent, inActionPanel=undefined}) {
-        super({macro, inActionPanel});
-        this.parentLabel = parent;
-    }
-
-    async _onRightClick(event) {
-        const macro = game.macros.get(this.macro.id);
-        if(macro) {
-            const macros = this.actor.getFlag(MODULE_ID, `macros.${this.parentLabel}`) || [];
-            macros.splice(macros.indexOf(macro.id), 1);
-            await this.actor.setFlag(MODULE_ID, `macros.${this.parentLabel}`, macros);
-            await this.parent.parent.render();
-        }
-    }
-}
 
 export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get actionCost() { return 1; }
@@ -98,6 +53,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
         if(actions && actions.length === 1)
             return [new CosmereItemButton({
                 item: actions[0],
+                actionCost: this.actionCost,
                 inActionPanel: true,
             })];
 
@@ -111,6 +67,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
                 if (item.type !== 'script' || item.type !== 'chat') {
                     buttons.push(new CosmereItemButton({
                         item: item,
+                        actionCost: this.actionCost,
                         inActionPanel: true,
                     }));
                 } else {
