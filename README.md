@@ -5,9 +5,9 @@ This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.c
 ![Example showcasing the layout of the HUD](/imgs/example.png "Example")
 
 ### Compatability
-- ![Foundry v12](https://img.shields.io/badge/Foundry-v12-green)
+- ![Foundry v13](https://img.shields.io/badge/Foundry-v13-green)
 - ![Argon - Combat HUD(CORE)](https://img.shields.io/badge/enhancedcombathud%E2%80%93core-v4.0.3-green)
-- ![Cosmere RPG](https://img.shields.io/badge/cosmere%E2%80%93rpg-v1.0.0-green)
+- ![Cosmere RPG](https://img.shields.io/badge/cosmere%E2%80%93rpg-v2.0.0-green)
 
 ### Features
 - Weapon sets allow you to manage equipping different sets of weapons as well as provides clickable actions to roll the dice for those weapons in a convenient "Strike" action panel
