@@ -35,7 +35,7 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
 
             const checked = Array.isArray(saved) ? saved.includes(id) : saved.has(id);
             compendiums.push({
-                name: compendium.metadata.label,
+                name: `${compendium.metadata.packageName} / ${compendium.metadata.label}`,
                 id,
                 checked,
             });
