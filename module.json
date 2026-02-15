@@ -17,7 +17,7 @@
   "download": "#{DOWNLOAD}#",
   "readme": "README.md",
   "compatibility": {
-    "minimum": "12",
+    "minimum": "13",
     "verified": "13"
   },
   "esmodules": [
@@ -29,7 +29,7 @@
         "id": "cosmere-rpg",
         "type": "system",
         "compatibility": {
-          "minimum": "0.3.1",
+          "minimum": "2.0.0",
           "verified": "2.0.0"
         }
       }
