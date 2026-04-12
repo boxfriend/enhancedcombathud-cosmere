@@ -26,7 +26,7 @@ export class CosmereItemButton extends BUTTONS.ItemButton {
     async getTooltipData() {
         const description = this.item.system.description;
         let descriptionData = description.chat || description.short || description.value;
-        descriptionData = await TextEditor.enrichHTML(descriptionData, { relativeTo: this.actor });
+        descriptionData = await foundry.applications.ux.TextEditor.implementation.enrichHTML(descriptionData, { relativeTo: this.actor });
         return {
             title: this.item.name,
             subtitle: game.i18n.localize(`COSMERE.Item.Type.${this.item.type.capitalize()}.label`),
