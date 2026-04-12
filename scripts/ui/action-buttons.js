@@ -11,14 +11,14 @@ export class CosmereItemButton extends BUTTONS.ItemButton {
     async _onLeftClick(event) {
         this.actor.useItem(this.item);
 
-        const combatant = game.combat?.getCombatantByActor(this.actor);
+/*        const combatant = game.combat?.getCombatantByActor(this.actor);
         if(combatant)
         {
             ensureHasFlag(combatant);
             const actions = combatant.getFlag(MODULE_ID, "actions");
             combatant.setFlag(MODULE_ID,"actions", actions + this.actionCost);
             console.warn('boxfriend', actions, this.actionCost);
-        }
+        }*/
     }
 
     get hasTooltip() { return true; }
