@@ -19,6 +19,14 @@ This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.c
 - Enriched tooltips when hovering over an action!
 - Optionally exclude compendiums and world actions from being included
 
+### FAQ
+- How do I add my weapon actions to the hud?
+  - Make sure your weapons are equipped via the Weapon Sets above the character portrait in the hud
+- I have hidden an action on the bar, how can I show it again?
+  - There is a menu to Unhide Actions in the module's settings
+- I see way too many actions that I shouldn't have access to in my hud, what should I do?
+  - By default, all compendiums are selected as a source to pull actions from. In the module's settings you'll want to change it so that only the compendiums that contain basic actions are selected. This is typically just `cosmere-rpg/Actions` and `cosmere-rpg-stormlight-handbook/Actions` 
+
 ### TODO
 - Implement action cost tracking when using actions during combat
 - ~~Tooltips to provide information about actions on hover~~ Completed!
