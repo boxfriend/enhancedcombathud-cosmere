@@ -1,5 +1,5 @@
 import { COMPENDIUM_BASIC_ACTIONS, WORLD_BASIC_ACTIONS, MODULE_ID } from '../utilities.js';
-import { CosmereItemButton, RemovableMacroButton } from './ActionButtons.js'
+import { CosmereItemButton, RemovableMacroButton } from './action-buttons.js'
 
 const BUTTONS = CONFIG.ARGON.MAIN.BUTTONS;
 

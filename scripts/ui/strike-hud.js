@@ -1,4 +1,4 @@
-import { CosmereWeaponButton } from './ActionButtons.js';
+import { CosmereWeaponButton } from './action-buttons.js';
 
 export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get label() {
