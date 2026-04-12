@@ -5,6 +5,7 @@ import CosmereMovementHUD from "./ui/movement-hud.js";
 import CosmereRestButtons from "./ui/rest-buttons.js";
 import CosmereStrikeHUD from "./ui/strike-hud.js";
 import CosmereActionHUD from "./ui/action-hud.js";
+import CosmereActionHUDPanel from "./ui/action-hud-panel.js";
 import setupUtilities from "./utilities.js";
 import registerSettings from "./settings.js";
 import { MODULE_ID, refreshAllActions } from "./utilities.js";
@@ -16,16 +17,14 @@ Hooks.once("argonInit", (CoreHUD) => {
 
     const mainPanels = [
         CosmereStrikeHUD,
-        CosmereActionHUD,
-        class extends CosmereActionHUD { get actionCost() { return 2; } },
-        class extends CosmereActionHUD { get actionCost() { return 3; } },
-        class extends CosmereActionHUD { get actionType() { return 'fre'; } },
-        class extends CosmereActionHUD { get actionType() { return 'rea'; } },
+        CosmereActionHUDPanel,
+        class extends CosmereActionHUDPanel { get actionType() { return 'fre'; } },
+        class extends CosmereActionHUDPanel { get actionType() { return 'rea'; } },
         ];
 
     const includeSpeActions = game.settings.get(MODULE_ID, "includeSpePanel");
     if(includeSpeActions)
-        mainPanels.push(class extends CosmereActionHUD { get actionType() { return 'spe'; } })
+        mainPanels.push(class extends CosmereActionHUDPanel { get actionType() { return 'spe'; } })
 
     const includePassTurn = game.settings.get(MODULE_ID, "includePassTurn"); //TODO: Make this a setting
     if(includePassTurn)
