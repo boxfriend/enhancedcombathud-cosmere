@@ -49,5 +49,5 @@ Hooks.on("renderSettingsConfig", (app, html, data) => {
         `<button id="${MODULE_ID}.refresh" title="Refreshes all cached actions and compendiums." style="flex:1"><i class="fa-solid fa-arrows-rotate"></i><label>Refresh All Actions</label></button>
          <p class="notes">Refreshes all cached compendiums and actions. Useful if you have added or removed actions or compendiums and want to refresh Argon.</p>                
     `);
-    html.querySelector(`button[id="${MODULE_ID}.refresh"]`).addEventListener("click", (event) => { refreshAllActions(); ui.ARGON.refresh(); });
+    html.querySelector(`button[id="${MODULE_ID}.refresh"]`).addEventListener("click", (event) => { refreshAllActions().then(() => ui.ARGON.refresh()); });
 });
