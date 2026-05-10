@@ -1,4 +1,5 @@
 import CosmerePortrait from "./ui/portrait.js";
+import { CosmereTurnPanel } from "./ui/turn-panel/index.js";
 import CosmereSkillsDrawer from "./ui/drawer.js";
 import CosmereWeaponSets from "./ui/weapon-sets.js"
 import CosmereMovementHUD from "./ui/movement-hud.js";
@@ -29,7 +30,7 @@ Hooks.once("argonInit", (CoreHUD) => {
 
     const includePassTurn = game.settings.get(MODULE_ID, "includePassTurn"); //TODO: Make this a setting
     if(includePassTurn)
-        mainPanels.push(CoreHUD.ARGON.PREFAB.PassTurnPanel);
+        mainPanels.push(CosmereTurnPanel);
 
     CoreHUD.defineMainPanels(mainPanels);
     CoreHUD.defineWeaponSets(CosmereWeaponSets);
@@ -41,6 +42,12 @@ Hooks.once("argonInit", (CoreHUD) => {
 //Gotta make sure settings are registered before the argon stuff is invoked
 Hooks.once("init", registerSettings);
 Hooks.once("ready", setupUtilities);
+
+// Argon has no listener for updateCombatant (e.g. toggleTurnSpeed, markActivated).
+// Call updateVisibility on all combat panels so buttons re-render on combatant changes.
+Hooks.on("updateCombatant", () => {
+    ui.ARGON?.components?.combat?.forEach((p) => p.updateVisibility());
+});
 
 Hooks.on("renderSettingsConfig", (app, html, data) => {
     html = html instanceof jQuery ? html[0] : html;

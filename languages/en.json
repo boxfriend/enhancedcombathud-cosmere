@@ -1,0 +1,12 @@
+{
+  "enhancedcombathud-cosmere-rpg": {
+    "turn": {
+      "panel": "Turn",
+      "start": "Start Turn",
+      "startFast": "Start Fast Turn",
+      "startSlow": "Start Slow Turn",
+      "endFast": "End Fast Turn",
+      "endSlow": "End Slow Turn"
+    }
+  }
+}

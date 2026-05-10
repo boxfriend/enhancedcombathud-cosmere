@@ -41,18 +41,6 @@ export default class CosmerePortrait extends ARGON.PORTRAIT.PortraitPanel {
     async _getButtons() {
         const buttons = [];
 
-        if(game.combat){
-            buttons.push({
-                id: "toggle-speed",
-                icon: "fas fa-stopwatch",
-                label: "Toggle Turn Speed",
-                onClick: (e) => {
-                    const combatant = game.combat.getCombatantsByActor(this.actor)[0];
-                    combatant?.toggleTurnSpeed();
-                },
-            });
-        }
-
         buttons.push({
             id: "open-sheet",
             icon: "fas fa-suitcase",
