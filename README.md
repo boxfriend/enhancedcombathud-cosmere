@@ -2,7 +2,10 @@
 
 This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.com/packages/enhancedcombathud/) module along with the [Cosmere RPG System](https://foundryvtt.com/packages/cosmere-rpg) for the Foundry VTT.
 
-![Example showcasing the layout of the HUD](/imgs/example.png "Example")
+![Example showcasing the layout of the HUD](/imgs/example.png "Example of the HUD layout")
+
+#### Need help?
+The quickest way to get help with the module is join the [Argon - Combat HUD (COSMERE-RPG)](https://discord.com/channels/1299110557689053264/1374520624403316807) thread in the Metalworks discord server. Otherwise, check the [FAQ](#faq) below and the [Issues](Issues) tab.
 
 ### Compatability
 - ![Foundry v13](https://img.shields.io/badge/Foundry-v13-green)
