@@ -1,0 +1,16 @@
+
+:root .toggle-turn-speed-button-fast {
+  background-image: url("../../../systems/cosmere-rpg/assets/icons/svg/combat/icon_combat_fast_turn_on.svg");
+  background-position-x: 24px;
+}
+:root  .toggle-turn-speed-button-fast:hover:not(.suppress-hover) {
+  background-image: url("../../../systems/cosmere-rpg/assets/icons/svg/combat/icon_combat_fast_turn_hover.svg");
+}
+
+:root .toggle-turn-speed-button-slow {
+  background-image: url("../../../systems/cosmere-rpg/assets/icons/svg/combat/icon_combat_slow_turn_on.svg");
+  background-position-x: 24px;
+}
+:root .toggle-turn-speed-button-slow:hover:not(.suppress-hover) {
+  background-image: url("../../../systems/cosmere-rpg/assets/icons/svg/combat/icon_combat_slow_turn_hover.svg");
+}
