@@ -150,7 +150,7 @@ jobs:
         run: echo "MODULE_JSON=$(jq -c . < module.json)" >> $GITHUB_ENV
 
       - name: Deploy to Foundry
-        uses: fjogeleit/http-request-action@v1
+        uses: fjogeleit/http-request-action@v2
         with:
           url: 'https://foundryvtt.com/_api/packages/release_version/'
           method: 'POST'
