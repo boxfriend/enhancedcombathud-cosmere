@@ -1,4 +1,5 @@
-import { CosmereWeaponButton } from './action-buttons.js';
+import { COMPENDIUM_BASIC_ACTIONS, MODULE_ID } from '../utilities.js';
+import { CosmereWeaponButton, CosmereItemButton } from './action-buttons.js';
 
 export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get label() {
@@ -21,12 +22,25 @@ export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
             })
         ];
 
-        const unarmed = this.actor.items.find((item) => item.name === 'Unarmed Strike');
-        buttons.push(new CosmereWeaponButton({
-            item: unarmed,
-            actionCost: 1,
-            inActionPanel: true,
-        }));
+        let unarmed = this.actor.actions.find(
+            (item) => item.system.id === 'unarmed-strike'
+                || item.system.id === 'unamred-attack'
+        );
+
+
+        if(unarmed.type === 'weapon') {
+            buttons.push(new CosmereWeaponButton({
+                item: unarmed,
+                actionCost: 1,
+                inActionPanel: true,
+            }));
+        } else {
+            buttons.push(new CosmereItemButton({
+                item: unarmed,
+                actionCost: 1,
+                inActionPanel: true,
+            }));
+        }
 
         return buttons;
     }
