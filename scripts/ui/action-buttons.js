@@ -57,12 +57,22 @@ export class RemovableMacroButton extends BUTTONS.MacroButton {
 
 export class CosmereWeaponButton extends CosmereItemButton {
 
+    async _onLeftClick() {
+        this.actor.useItem(this.strike);
+    }
+
     get label() {
-        let name = this.item.name;
+        let name = this.strike.name;
         if (this.item.system.equip.hand === 'off_hand') {
             name += " " + game.i18n.localize("COSMERE.Item.Equip.Hand.Off.Label");
         }
         return name;
+    }
+
+    get strike() {
+        return this.item.actions.find(
+            (action) => action.system.id.startsWith('strike-')
+        );
     }
 
     async getTooltipData() {
