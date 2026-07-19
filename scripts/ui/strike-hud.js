@@ -27,6 +27,16 @@ export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
                 || item.system.id === 'unamred-attack'
         );
 
+        if(!unarmed) {
+            const includeWorld = game.settings.get(MODULE_ID, "includeBasicActions");
+            if(includeWorld)
+                unarmed = COMPENDIUM_BASIC_ACTIONS.find(
+                    (action) => action.system.id === 'unarmed-strike' 
+                        || action.system.id === 'unarmed-attack'
+                );
+        }
+
+        if(!unarmed) return;
 
         if(unarmed.type === 'weapon') {
             buttons.push(new CosmereWeaponButton({
