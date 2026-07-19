@@ -10,15 +10,6 @@ export class CosmereItemButton extends BUTTONS.ItemButton {
     }
     async _onLeftClick(event) {
         this.actor.useItem(this.item);
-
-/*        const combatant = game.combat?.getCombatantByActor(this.actor);
-        if(combatant)
-        {
-            ensureHasFlag(combatant);
-            const actions = combatant.getFlag(MODULE_ID, "actions");
-            combatant.setFlag(MODULE_ID,"actions", actions + this.actionCost);
-            console.warn('boxfriend', actions, this.actionCost);
-        }*/
     }
 
     get hasTooltip() { return true; }
@@ -66,12 +57,22 @@ export class RemovableMacroButton extends BUTTONS.MacroButton {
 
 export class CosmereWeaponButton extends CosmereItemButton {
 
+    async _onLeftClick() {
+        this.actor.useItem(this.strike);
+    }
+
     get label() {
-        let name = this.item.name;
+        let name = this.strike.name;
         if (this.item.system.equip.hand === 'off_hand') {
             name += " " + game.i18n.localize("COSMERE.Item.Equip.Hand.Off.Label");
         }
         return name;
+    }
+
+    get strike() {
+        return this.item.actions.find(
+            (action) => action.system.id.startsWith('strike-')
+        );
     }
 
     async getTooltipData() {

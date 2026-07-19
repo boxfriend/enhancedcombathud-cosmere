@@ -22,12 +22,45 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
         }
     }
 
-    #getActionsFilter(item) {
-        const system = item.system;
-        return !this.#isHidden(item) && system.activation?.cost?.type === this.actionType
-            && item.type !== 'weapon' && item.name !== 'Strike'
+    #getActionsFilter(action) {
+        const system = action.system;
+        return !this.#isHidden(action) 
+            && system.activation?.cost?.type === this.actionType
+            && this.#notStrike(action)
+            && this.#parentCheck(action)
             && (this.actionType !== 'act' || (this.actionType === 'act'
                 && system.activation?.cost?.value === this.actionCost));
+    }
+
+    #notStrike(action) {
+        return action.name !== 'Strike'
+            && action.system.id !== 'unarmed-strike' 
+            && action.system.id !== 'unarmed-attack';
+    }
+
+    #parentCheck(action) {
+        const item = action.parent;
+
+        // if it has no parent then we obviously don't need to check it
+        if(!item) return true;
+
+        if(!this.#validEquip(item)) return false;
+
+        // gotta ignore the auto-generated weapon Strike actions
+        if(item.type === 'weapon' && action.system.id.startsWith('strike-'))
+            return false;
+
+        return true;
+    }
+
+    #validEquip(item) {
+        const system = item.system;
+        return system.alwaysEquipped 
+            // Not equippable at all
+            || !system.equippableEnabled
+            // Equippable and actually equipped
+            || (system.equippableEnabled && system.equipped);
+
     }
 
     #isHidden(item) {
@@ -36,7 +69,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     }
 
     async _getButtons() {
-        let actions = this.actor.items?.filter(this.#getActionsFilter.bind(this));
+        let actions = this.actor.actions.filter(this.#getActionsFilter.bind(this));
 
         const includeWorld = game.settings.get(MODULE_ID, "includeWorldBasicActions");
         if(includeWorld)
