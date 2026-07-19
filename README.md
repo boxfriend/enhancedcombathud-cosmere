@@ -8,9 +8,9 @@ This module is for use with the [Argon - Combat HUD (CORE)](https://foundryvtt.c
 The quickest way to get help with the module is join the [Argon - Combat HUD (COSMERE-RPG)](https://discord.com/channels/1299110557689053264/1374520624403316807) thread in the Metalworks discord server. Otherwise, check the [FAQ](#faq) below and the Issues tab.
 
 ### Compatability
-- ![Foundry v13](https://img.shields.io/badge/Foundry-v13-green)
-- ![Argon - Combat HUD(CORE)](https://img.shields.io/badge/enhancedcombathud%E2%80%93core-v4.0.3-green)
-- ![Cosmere RPG](https://img.shields.io/badge/cosmere%E2%80%93rpg-v2.0.0-green)
+- ![Foundry v13](https://img.shields.io/badge/Foundry_VTT-v13-green?style=flat-square)
+- ![Argon - Combat HUD(CORE)](https://img.shields.io/badge/enhancedcombathud%E2%80%93core-v4.1.2-green?style=flat-square)
+- ![Cosmere RPG](https://img.shields.io/badge/cosmere%E2%80%93rpg-v3.0.0-green?style=flat-square)
 
 ### Features
 - Weapon sets allow you to manage equipping different sets of weapons as well as provides clickable actions to roll the dice for those weapons in a convenient "Strike" action panel
@@ -28,7 +28,7 @@ The quickest way to get help with the module is join the [Argon - Combat HUD (CO
 - I have hidden an action on the bar, how can I show it again?
   - There is a menu to Unhide Actions in the module's settings
 - I see way too many actions that I shouldn't have access to in my hud, what should I do?
-  - By default, all compendiums are selected as a source to pull actions from. In the module's settings you'll want to change it so that only the compendiums that contain basic actions are selected. This is typically just `cosmere-rpg/Actions` and `cosmere-rpg-stormlight-handbook/Actions` 
+  - By default, all compendiums are selected as a source to pull actions from. In the module's settings you'll want to change it so that only the compendiums that contain basic actions are selected. This is typically just `cosmere-rpg/Actions` or `cosmere-rpg-stormlight-handbook/Actions` 
 
 ### TODO
 - Implement action cost tracking when using actions during combat
