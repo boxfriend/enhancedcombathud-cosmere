@@ -32,7 +32,7 @@ export class CosmereItemButton extends BUTTONS.ItemButton {
             hidden.push(item);
             await this.actor.setFlag(MODULE_ID, "hiddenItems", hidden);
         }
-        await this.parent.parent.render();
+        await this.parent.parent.parent.render();
     }
 
     get template() { return new BUTTONS.ItemButton({item: null}).template; }
