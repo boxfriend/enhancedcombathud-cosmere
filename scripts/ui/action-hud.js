@@ -1,5 +1,5 @@
 import { COMPENDIUM_BASIC_ACTIONS, WORLD_BASIC_ACTIONS, MODULE_ID } from '../utilities.js';
-import { CosmereItemButton, RemovableMacroButton } from './action-buttons.js'
+import { CosmereItemButton, RemovableMacroButton, CosmereButtonPanelButton } from './action-buttons.js'
 
 const BUTTONS = CONFIG.ARGON.MAIN.BUTTONS;
 
@@ -69,6 +69,21 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     }
 
     async _getButtons() {
+        const buttons = [];
+        for(let i = 1; i <= 3; i++) {
+            const actions = this.#getActionButton('act', i);
+            //if(actions && actions.length > 0)
+                buttons.push(new CosmereButtonPanelButton(actions, i, 'act'));
+        }
+
+        buttons.push(new CosmereButtonPanelButton(this.#getActionButton('fre', 0), 0, 'fre'));
+        buttons.push(new CosmereButtonPanelButton(this.#getActionButton('spe', 0), 0, 'spe'));
+
+        return buttons;
+    }
+
+    #getActionButton(actionType, actionCost) {
+        let actions = this.actor.actions.filter(item => this.#getActionsFilter(item, actionType, actionCost));
 
         const includeWorld = game.settings.get(MODULE_ID, "includeWorldBasicActions");
         if(includeWorld)
