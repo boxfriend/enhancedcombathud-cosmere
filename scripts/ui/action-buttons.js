@@ -95,3 +95,96 @@ export class CosmereWeaponButton extends CosmereItemButton {
 
     async _onRightClick(event) {    }
 }
+
+export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
+    constructor(actions, cost, type) {
+        super();
+        this.actions = actions;
+        this.cost = cost;
+        this.actionType = type;
+    }
+
+    async activateListeners(html) {
+        super.activateListeners(html);
+        this.element.addEventListener("drop", this._onDrop.bind(this));
+
+    }
+
+    async _onDrop(event) {
+        console.log("drop", event, this);
+        try {
+            event.preventDefault();
+            event.stopPropagation();
+            const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+            console.log(data, event.dataTransfer.getData("text/plain"))
+            if (data?.type !== "Macro") return;
+            const macro = game.macros.get(data.uuid.replace("Macro.", ""));
+            console.log(macro);
+            if(macro) {
+                const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
+                macros.push(macro.id);
+                console.log(macros);
+                await this.actor.setFlag(MODULE_ID, `macros.${this.label}`, macros);
+                await this.panel.render();
+            }
+        } catch (error) { console.log(error); }
+    }
+
+    get label() {
+        switch(this.actionType) {
+            case 'act':
+                return "▶".repeat(this.cost);
+            case 'fre':
+                return "▷";
+            case 'rea':
+                return "↩";
+            case 'spe':
+                return "★";
+            default:
+                return "UNKNOWN";
+        }
+    }
+    
+    async _getPanel() {
+        const cost = this.cost;
+        return new CONFIG.ARGON.MAIN.BUTTON_PANELS.ButtonPanel({ id: this.label, buttons: this.actions.map((item) => {
+            if(item.type === "script" || item.type === "chat") {
+                return new RemovableMacroButton({
+                        macro: item,
+                        inActionPanel: true,
+                        parent: this.label,
+                    });
+            } else {
+                return new CosmereItemButton({ item, cost }) 
+            }
+        })});
+    }
+}
+
+export class CosmereButtonPanel extends CONFIG.ARGON.MAIN.BUTTON_PANELS.ButtonPanel {
+
+    get template() { return new CONFIG.ARGON.MAIN.BUTTON_PANELS.ButtonPanel().template; }
+    
+    async activateListeners(html) {
+        super.activateListeners(html);
+        this.element.addEventListener("drop", this._onDrop.bind(this));
+
+    }
+
+    async _onDrop(event) {
+        console.log("drop", event);
+        try {
+            event.preventDefault();
+            event.stopPropagation();
+            const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+            if (data?.type !== "Macro") return;
+            const macro = game.macros.get(data.uuid.replace("Macro.", ""));
+            if(macro) {
+                const macros = this.actor.getFlag(MODULE_ID, `macros.${this.id}`) || [];
+                macros.push(macro.id);
+                await this.actor.setFlag(MODULE_ID, `macros.${this.id}`, macros);
+                await this.render();
+            }
+        } catch (error) { console.log(error); }
+    }
+}
