@@ -22,14 +22,14 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
         }
     }
 
-    #getActionsFilter(action) {
+    #getActionsFilter(action, actionType, actionCost) {
         const system = action.system;
         return !this.#isHidden(action) 
-            && system.activation?.cost?.type === this.actionType
+            && system.activation?.cost?.type === actionType
             && this.#notStrike(action)
             && this.#parentCheck(action)
-            && (this.actionType !== 'act' || (this.actionType === 'act'
-                && system.activation?.cost?.value === this.actionCost));
+            && (actionType !== 'act' || (actionType === 'act'
+                && system.activation?.cost?.value === actionCost));
     }
 
     #notStrike(action) {
@@ -69,15 +69,14 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     }
 
     async _getButtons() {
-        let actions = this.actor.actions.filter(this.#getActionsFilter.bind(this));
 
         const includeWorld = game.settings.get(MODULE_ID, "includeWorldBasicActions");
         if(includeWorld)
-            actions = actions.concat(Array.from(WORLD_BASIC_ACTIONS).filter(this.#getActionsFilter.bind(this)));
+            actions = actions.concat(Array.from(WORLD_BASIC_ACTIONS).filter(item => this.#getActionsFilter(item, actionType, actionCost)));
 
         const includeBasic = game.settings.get(MODULE_ID, "includeBasicActions");
         if(includeBasic)
-            actions = actions.concat(Array.from(COMPENDIUM_BASIC_ACTIONS).filter(this.#getActionsFilter.bind(this)));
+            actions = actions.concat(Array.from(COMPENDIUM_BASIC_ACTIONS).filter(item => this.#getActionsFilter(item, actionType, actionCost)));
 
         actions = this.#filterDuplicates(actions);
         const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
