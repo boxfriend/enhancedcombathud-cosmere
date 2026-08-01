@@ -75,6 +75,7 @@ export default function registerSettings() {
     game.settings.register(MODULE_ID, "selectedCompendiums", {
         config: false,
         scope: override ? "world" : "client",
+        default: []
     });
 
     game.settings.register(MODULE_ID, "showEmptyPanel", {
