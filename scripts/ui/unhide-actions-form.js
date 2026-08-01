@@ -33,9 +33,11 @@ export default class UnhideActionsForm extends HandlebarsApplicationMixin(Applic
             const hidden = actor.getFlag(MODULE_ID, "hiddenItems") || [];
             const items = [];
             for(const item of hidden) {
-                const itemData = actor.items.get(item)
+                const itemData = actor.actions.find(action => action.id === item)
                     || game.items.get(item)
-                    || await this.#getItemFromCompendium(item);
+                    || await this.#getItemFromCompendium(item)
+                    // This last one was useful in my testing, i'm leaving it in because of that
+                    || game.macros.get(item);
 
                 items.push({
                     id: item,
