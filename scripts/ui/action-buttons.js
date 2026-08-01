@@ -102,6 +102,16 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
         this.actions = actions;
         this.cost = cost;
         this.actionType = type;
+
+        Hooks.on('boxfriend-SetChangesComplete', () => this._renderInner());
+        Hooks.on('updateItem', (item) => {
+            const validAction = (item) => item.system.activation?.cost?.type === this.actionType 
+                && item.system.activation?.cost?.value === this.cost
+                && !item.system.id.startsWith('strike-');
+            if((item.type === 'action' && validAction(item)) || item.actions?.find(validAction)) {
+                this._renderInner();
+            }
+        });
     }
 
     async activateListeners(html) {
