@@ -29,8 +29,8 @@
         "id": "cosmere-rpg",
         "type": "system",
         "compatibility": {
-          "minimum": "2.0.0",
-          "verified": "2.0.0"
+          "minimum": "3.0.0",
+          "verified": "3.0.1"
         }
       }
     ],
@@ -39,10 +39,17 @@
         "id": "enhancedcombathud",
         "type": "module",
         "compatibility": {
-          "minimum": "4.0.3",
-          "verified": "4.0.7"
+          "minimum": "4.1.2",
+          "verified": "4.1.2"
         }
       }
     ]
-  }
+  },
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ]
 }

@@ -44,5 +44,7 @@ export default class CosmereWeaponSets extends CONFIG.ARGON.WeaponSets {
                 }
             }
         }
+
+        Hooks.callAll('boxfriend-SetChangesComplete')
     }
 }

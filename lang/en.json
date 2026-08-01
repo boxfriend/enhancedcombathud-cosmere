@@ -1,0 +1,69 @@
+{
+    "enhancedcombathud-cosmere-rpg": {
+        "Actions": {
+            "Types":{
+                "Actions": "Actions",
+                "Reactions": "Reactions",
+                "Free": "Free Actions",
+                "Special": "Special",
+                "Strikes": "Strikes"
+            },
+            "Groups": {
+                "Weapons": "Weapons",
+                "Talents": "Talents",
+                "Powers": "Powers",
+                "Basic": "Basic",
+                "Equipment": "Equipment",
+                "Macros": "Macros"
+            }
+        },
+        "PortraitHud": {
+            "TurnSpeed": "Toggle Turn Speed",
+            "Minimize": "Minimize",
+            "CharSheet": "Open Character Sheet"
+        },
+        "Settings": {
+
+            "OverrideClient": {
+                "Name": "Override Client Configuration",
+                "Hint": "Forces all clients to use the same configuration. REQUIRES RELOAD"
+            },
+            "WorldActions": {
+                "Name": "Include World Actions",
+                "Hint": "Include basic actions that have been imported into the world in the action hud."
+            },
+            "CompendiumActions": {
+                "Name": "Include Compendium Actions",
+                "Hint": "Include basic actions from the compendium in the action hud."
+            },
+            "IncludeSpecial": {
+                "Name": "Include Special Actions Panel",
+                "Hint": "Include a panel that allows the player to activate special actions. REQUIRES RELOAD"
+            },
+            "IncludePassTurn": {
+                "Name": "Include Pass Turn Panel",
+                "Hint": "Include a panel that allows the player to pass their turn during combat. REQUIRES RELOAD"
+            },
+            "UnhideActions": {
+                "Name": "Remove Hidden Actions",
+                "Label": "Unhide Actions",
+                "Selected": "Unhide Selected"
+            },
+            "ShowEmpty": {
+                "Name": "Show Empty Panels",
+                "Hint": "Displays action panels when no actions present."
+            },
+            "SelectCompendiums": {
+                "Name": "Select Included Compendiums",
+                "Label": "Select Compendiums",
+                "Save": "Save Selected",
+                "Refresh": "Refresh List"
+            },
+            "RefreshAll": {
+                "Name": "Refresh All Actions",
+                "Hint": "Refreshes all cached actions and compendiums.",
+                "Long": "Refreshes all cached compendiums and actions. Useful if you have added or removed actions or compendiums and want to refresh Argon."
+            }
+        }
+    }
+}

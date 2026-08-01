@@ -11,7 +11,7 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
             closeOnSubmit: true,
         },
         window: {
-            title: "Select Included Compendiums",
+            title: `${MODULE_ID}.Settings.SelectCompendiums.Name`,
             contentClasses: ["standard-form"]
         }
     };
@@ -43,9 +43,9 @@ export default class CompendiumSelectionForm extends HandlebarsApplicationMixin(
         return {
             compendiums,
             buttons: [
-                { type: "submit", icon: "fa-solid fa-save", label: "Save Selected" },
-                { type: "button", icon: "fa-solid fa-arrows-rotate", label: "Refresh List", name: `${MODULE_ID}.refresh` },
-                { type: "cancel", icon: "fa-solid fa-cancel", label: "Cancel" },
+                { type: "submit", icon: "fa-solid fa-save", label: game.i18n.localize(`${MODULE_ID}.Settings.SelectCompendiums.Save`) },
+                { type: "button", icon: "fa-solid fa-arrows-rotate", label: game.i18n.localize(`${MODULE_ID}.Settings.SelectCompendiums.Refresh`), name: `${MODULE_ID}.refresh` },
+                { type: "cancel", icon: "fa-solid fa-cancel", label: game.i18n.localize('Cancel') },
             ]
         }
     }

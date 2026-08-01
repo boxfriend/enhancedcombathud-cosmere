@@ -1,16 +1,100 @@
 import { COMPENDIUM_BASIC_ACTIONS, WORLD_BASIC_ACTIONS, MODULE_ID } from '../utilities.js';
-import { CosmereItemButton, RemovableMacroButton } from './action-buttons.js'
+import { CosmereItemButton } from './buttons/cosmere-item-button.js';
+import { CosmereButtonPanelButton } from './buttons/cosmere-button-panel-button.js';
+import { RemovableMacroButton } from './buttons/removable-macro-button.js';
 
 const BUTTONS = CONFIG.ARGON.MAIN.BUTTONS;
 
 export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
-    get actionCost() { return 1; }
+
     get actionType() { return 'act'; }
 
     get label() {
         switch(this.actionType) {
             case 'act':
-                return "▶".repeat(this.actionCost);
+                return game.i18n.localize(`${MODULE_ID}.Actions.Types.Actions`);
+            case 'fre':
+                return game.i18n.localize(`${MODULE_ID}.Actions.Types.Free`);
+            case 'rea':
+                return game.i18n.localize(`${MODULE_ID}.Actions.Types.Reactions`);
+            case 'spe':
+                return game.i18n.localize(`${MODULE_ID}.Actions.Types.Special`);
+            default:
+                return game.i18n.localize(`${MODULE_ID}.Unknown`);
+        }
+    }
+
+    async _getButtons() {
+        const buttons = [];
+
+        if(this.actionType === 'act') {
+            for(let i = 1; i <= 3; i++) {
+                const actions = this.#getActions('act', i);
+                buttons.push(new CosmereButtonPanelButton(actions, i, 'act'));
+            }
+        }
+        else {
+            buttons.push(new CosmereButtonPanelButton(this.#getActions(this.actionType, 0), 0, this.actionType));
+        }
+
+        if(game.settings.get(MODULE_ID, "showEmptyPanel"))
+            return buttons;
+
+        return buttons.filter(button => button.actions?.length > 0);
+    }
+
+    get template() { return new CONFIG.ARGON.MAIN.ActionPanel().template; }
+
+    #getActionsFilter(action, actionType, actionCost) {
+        const system = action.system;
+        return system.activation?.cost?.type === actionType
+            && this.#notBasicStrikeAction(action)
+            && this.#notWeaponStrikeAction(action)
+            && (actionType !== 'act' || (actionType === 'act'
+                && system.activation?.cost?.value === actionCost));
+    }
+
+    #notBasicStrikeAction(action) {
+        return action.name !== 'Strike'
+            && action.system.id !== 'unarmed-strike' 
+            && action.system.id !== 'unarmed-attack';
+    }
+
+    #notWeaponStrikeAction(action) {
+        const parent = action.parent;
+
+        // if it has no parent then we obviously don't need to check it
+        if(!parent) return true;
+
+        if(parent.type === 'weapon' && action.system.id.startsWith('strike-'))
+            return false;
+
+        return true;
+    }
+
+    #getActions(actionType, actionCost) {
+        let actions = this.actor.actions.filter(item => this.#getActionsFilter(item, actionType, actionCost));
+
+        const includeWorld = game.settings.get(MODULE_ID, "includeWorldBasicActions");
+        if(includeWorld)
+            actions = actions.concat(Array.from(WORLD_BASIC_ACTIONS).filter(item => this.#getActionsFilter(item, actionType, actionCost)));
+
+        const includeBasic = game.settings.get(MODULE_ID, "includeBasicActions");
+        if(includeBasic)
+            actions = actions.concat(Array.from(COMPENDIUM_BASIC_ACTIONS).filter(item => this.#getActionsFilter(item, actionType, actionCost)));
+
+        actions = this.#filterDuplicates(actions);
+        const macroCost = this.#getMacroCost(actionType, actionCost);
+        const macros = this.actor.getFlag(MODULE_ID, `macros.${macroCost}`) || [];
+        actions.push(...macros.map(id => game.macros.get(id)));
+
+        return actions;
+    }
+
+    #getMacroCost(actionType, actionCost) {
+        switch(actionType) {
+            case 'act':
+                return "▶".repeat(actionCost);
             case 'fre':
                 return "▷";
             case 'rea':
@@ -22,80 +106,6 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
         }
     }
 
-    #getActionsFilter(item) {
-        const system = item.system;
-        return !this.#isHidden(item) && system.activation?.cost?.type === this.actionType
-            && item.type !== 'weapon' && item.name !== 'Strike'
-            && (this.actionType !== 'act' || (this.actionType === 'act'
-                && system.activation?.cost?.value === this.actionCost));
-    }
-
-    #isHidden(item) {
-        const hidden = this.actor.getFlag(MODULE_ID, "hiddenItems") || [];
-        return hidden.includes(item.id);
-    }
-
-    async _getButtons() {
-        let actions = this.actor.items?.filter(this.#getActionsFilter.bind(this));
-
-        const includeWorld = game.settings.get(MODULE_ID, "includeWorldBasicActions");
-        if(includeWorld)
-            actions = actions.concat(Array.from(WORLD_BASIC_ACTIONS).filter(this.#getActionsFilter.bind(this)));
-
-        const includeBasic = game.settings.get(MODULE_ID, "includeBasicActions");
-        if(includeBasic)
-            actions = actions.concat(Array.from(COMPENDIUM_BASIC_ACTIONS).filter(this.#getActionsFilter.bind(this)));
-
-        actions = this.#filterDuplicates(actions);
-        const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
-        actions.push(...macros.map(id => game.macros.get(id)));
-
-        if(actions && actions.length === 1)
-            return [new CosmereItemButton({
-                item: actions[0],
-                actionCost: this.actionCost,
-                inActionPanel: true,
-            })];
-
-        if(actions && actions.length % 2 !== 0)
-            actions.push(null);
-
-        const buttons = [];
-
-        actions.forEach(item => {
-            if(item) {
-                if (item.type !== 'script' || item.type !== 'chat') {
-                    buttons.push(new CosmereItemButton({
-                        item: item,
-                        actionCost: this.actionCost,
-                        inActionPanel: true,
-                    }));
-                } else {
-                    buttons.push(new RemovableMacroButton({
-                        macro: item,
-                        inActionPanel: true,
-                        parent: this.label,
-                    }));
-                }
-            } else {
-                buttons.push(new BUTTONS.ActionButton());
-            }
-        });
-
-        const splitButtons = [];
-        for(let i = 0; i < buttons.length; i += 2) {
-            const first = buttons[i];
-            const second = buttons[i + 1];
-            splitButtons.push(new BUTTONS.SplitButton(first, second));
-        }
-
-        if(splitButtons.length === 0) {
-            const showEmpty = game.settings.get(MODULE_ID, "showEmptyPanel");
-            if(showEmpty) splitButtons.push(new BUTTONS.ActionButton());
-        }
-        return splitButtons;
-    }
-
     #filterDuplicates(array) {
         const set = new Set();
         return array.filter(item => {
@@ -103,30 +113,6 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
             set.add(item.name);
             return true;
         });
-    }
-
-    get template() { return new CONFIG.ARGON.MAIN.ActionPanel().template; }
-    async activateListeners(html) {
-        super.activateListeners(html);
-        this.element.addEventListener("drop", this._onDrop.bind(this));
-
-    }
-
-    async _onDrop(event) {
-        console.log("drop", event);
-        try {
-            event.preventDefault();
-            event.stopPropagation();
-            const data = JSON.parse(event.dataTransfer.getData("text/plain"));
-            if (data?.type !== "Macro") return;
-            const macro = game.macros.get(data.uuid.replace("Macro.", ""));
-            if(macro) {
-                const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
-                macros.push(macro.id);
-                await this.actor.setFlag(MODULE_ID, `macros.${this.label}`, macros);
-                await this.render();
-            }
-        } catch (error) { console.log(error); }
     }
 }
 
