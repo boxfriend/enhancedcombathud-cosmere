@@ -1,110 +1,9 @@
-import { MODULE_ID } from '../utilities.js';
+import { MODULE_ID } from '../../utilities.js';
+import { CosmereItemButton } from './cosmere-item-button.js';
+import { RemovableMacroButton } from './removable-macro-button.js';
 
 const BUTTONS = CONFIG.ARGON.MAIN.BUTTONS;
-
-export class CosmereItemButton extends BUTTONS.ItemButton {
-    constructor({item, actionCost, isWeaponSet=false, isPrimary=false,
-                    inActionPanel=undefined}) {
-        super({item, isWeaponSet, isPrimary, inActionPanel});
-        this.actionCost = actionCost;
-    }
-    async _onLeftClick(event) {
-        this.actor.useItem(this.item);
-    }
-
-    get hasTooltip() { return true; }
-
-    async getTooltipData() {
-        const description = this.item.system.description;
-        let descriptionData = description.chat || description.short || description.value;
-        descriptionData = await foundry.applications.ux.TextEditor.implementation.enrichHTML(descriptionData, { relativeTo: this.actor });
-        return {
-            title: this.item.name,
-            subtitle: game.i18n.localize(`COSMERE.Item.Type.${this.item.type.capitalize()}.label`),
-            description: descriptionData,
-        }
-    }
-
-    async _onRightClick(event) {
-        const item = this.item.id;
-        const hidden = this.actor.getFlag(MODULE_ID, "hiddenItems") || [];
-        if(!hidden.includes(item)) {
-            hidden.push(item);
-            await this.actor.setFlag(MODULE_ID, "hiddenItems", hidden);
-        }
-        await this.parent.parent.parent.render();
-    }
-
-    get template() { return new BUTTONS.ItemButton({item: null}).template; }
-}
-
-export class RemovableMacroButton extends BUTTONS.MacroButton {
-    constructor({ macro, parent, inActionPanel=undefined}) {
-        super({macro, inActionPanel});
-        this.parentLabel = parent;
-    }
-
-    async _onRightClick(event) {
-        const macro = game.macros.get(this.macro.id);
-        if(macro) {
-            const macros = this.actor.getFlag(MODULE_ID, `macros.${this.parentLabel}`) || [];
-            macros.splice(macros.indexOf(macro.id), 1);
-            await this.actor.setFlag(MODULE_ID, `macros.${this.parentLabel}`, macros);
-
-            // we need to make sure to target the panel button which is several layers higher
-            let parent = this.parent;
-            while(parent && !(parent instanceof CosmereButtonPanelButton))
-                parent = parent.parent;
-
-            if(parent){
-                
-                await parent._renderInner();
-            }
-                
-        }
-    }
-}
-
-export class CosmereWeaponButton extends CosmereItemButton {
-
-    async _onLeftClick() {
-        this.actor.useItem(this.strike);
-    }
-
-    get label() {
-        let name = this.strike.name;
-        if (this.item.system.equip.hand === 'off_hand') {
-            name += " " + game.i18n.localize("COSMERE.Item.Equip.Hand.Off.Label");
-        }
-        return name;
-    }
-
-    get strike() {
-        return this.item.actions.find(
-            (action) => action.system.id.startsWith('strike-')
-        );
-    }
-
-    async getTooltipData() {
-        const system = this.item.system.attack;
-        const type = system.type.capitalize();
-        let subtitle = game.i18n.localize(`COSMERE.Attack.Type.${type}`);
-
-        if (type === 'Ranged') {
-            const range = system.range;
-            subtitle += ` (${range.value}${range.unit} / ${range.long}${range.unit})`;
-        }
-
-        const description = this.item.system.description;
-        return {
-            title: this.item.name,
-            subtitle: subtitle,
-            description: description.chat || description.short || description.value,
-        }
-    }
-
-    async _onRightClick(event) {    }
-}
+const ACCORDION = CONFIG.ARGON.MAIN.BUTTON_PANELS.ACCORDION;
 
 export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
     constructor(actions, cost, type) {
@@ -242,9 +141,9 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
             }
         ];
 
-        return new CONFIG.ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanel({ id: this.label, 
+        return new ACCORDION.AccordionPanel({ id: this.label, 
             accordionPanelCategories: actions.filter(x => x.buttons?.length > 0).map(({label, buttons}) =>
-                new CONFIG.ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanelCategory({ label, buttons })
+                new ACCORDION.AccordionPanelCategory({ label, buttons })
             )
         });
     }

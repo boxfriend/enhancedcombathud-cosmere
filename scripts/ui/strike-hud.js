@@ -1,5 +1,6 @@
 import { COMPENDIUM_BASIC_ACTIONS, MODULE_ID } from '../utilities.js';
-import { CosmereWeaponButton, CosmereItemButton } from './action-buttons.js';
+import { CosmereWeaponButton } from './buttons/cosmere-weapon-button.js';
+import { CosmereItemButton } from './buttons/cosmere-item-button.js';
 
 export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get label() {
