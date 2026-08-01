@@ -8,7 +8,18 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get actionType() { return 'act'; }
 
     get label() {
+        switch(this.actionType) {
+            case 'act':
         return "Actions";
+            case 'fre':
+                return "Free Actions";
+            case 'rea':
+                return "Reactions";
+            case 'spe':
+                return "Special";
+            default:
+                return "UNKNOWN";
+        }
     }
 
     async _getButtons() {
