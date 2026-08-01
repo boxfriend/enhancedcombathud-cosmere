@@ -4,7 +4,6 @@ import CompendiumSelectionForm from './ui/compendium-selection-form.js';
 
 export default function registerSettings() {
 
-    const reloadText = game.i18n.localize(`${MODULE_ID}.Settings.RequiresReload`);
     game.settings.register(MODULE_ID, "overrideClient", {
         name: game.i18n.localize(`${MODULE_ID}.Settings.OverrideClient.Name`),
         hint: game.i18n.localize(`${MODULE_ID}.Settings.OverrideClient.Hint`),

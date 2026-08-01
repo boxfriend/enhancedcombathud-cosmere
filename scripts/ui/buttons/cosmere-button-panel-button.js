@@ -115,6 +115,11 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
                     .map(toButton)
             },
             {
+                label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Adversary'),
+                buttons: unhidden.filter(action => (!action.parent || action.parent.type === 'character' || action.parent.type === 'adversary') && action.system?.type === 'adversary')
+                    .map(toButton)
+            },
+            {
                 label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Talents'),
                 buttons: unhidden.filter(action => action.parent?.type === 'talent')
                     .map(toButton)
@@ -126,7 +131,7 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
             },
             {
                 label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Basic'),
-                buttons: unhidden.filter(action => !action.parent && action.system?.type === 'basic')
+                buttons: unhidden.filter(action => (!action.parent || action.parent.type === 'character' || action.parent.type === 'adversary') && action.system?.type === 'basic')
                     .map(toButton)
             },
             {
@@ -136,8 +141,13 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
             },
             {
                 label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Macros'),
-                buttons: unhidden.filter(action => !action.parent && (action.type === 'script' || action.type === 'chat'))
+                buttons: unhidden.filter(action => (!action.parent || action.parent.type === 'character') && (action.type === 'script' || action.type === 'chat'))
                     .map((action) => new RemovableMacroButton({ macro: action, parent: this.label }))
+            },
+            {
+                label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Other'),
+                buttons: unhidden.filter(action => action.parent && action.system?.type !== 'basic' && action.system?.type !== 'adversary')
+                    .map(toButton)
             }
         ];
 

@@ -37,7 +37,7 @@ export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
                 );
         }
 
-        if(!unarmed) return;
+        if(!unarmed) return buttons;
 
         if(unarmed.type === 'weapon') {
             buttons.push(new CosmereWeaponButton({
