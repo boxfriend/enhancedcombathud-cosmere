@@ -11,7 +11,7 @@ export default class UnhideActionsForm extends HandlebarsApplicationMixin(Applic
             closeOnSubmit: true,
         },
         window: {
-            title: "Unhide Actions",
+            title: `${MODULE_ID}.Settings.UnhideActions.Label`,
             contentClasses: ["standard-form"]
         }
     };
@@ -55,8 +55,8 @@ export default class UnhideActionsForm extends HandlebarsApplicationMixin(Applic
         return {
             actorData,
             buttons: [
-                { type: "submit", icon: "fa-solid fa-save", label: "Unhide Selected" },
-                { type: "cancel", icon: "fa-solid fa-cancel", label: "Cancel" },
+                { type: "submit", icon: "fa-solid fa-save", label: game.i18n.localize(`${MODULE_ID}.Settings.UnhideActions.Selected`) },
+                { type: "cancel", icon: "fa-solid fa-cancel", label: game.i18n.localize('Cancel') },
             ]
         }
     }

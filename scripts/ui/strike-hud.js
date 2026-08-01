@@ -4,7 +4,7 @@ import { CosmereItemButton } from './buttons/cosmere-item-button.js';
 
 export default class CosmereStrikeHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get label() {
-        return game.i18n.localize("COSMERE.Item.Weapon.Strike");
+        return game.i18n.localize("enhancedcombathud-cosmere-rpg.Actions.Types.Strikes");
     }
 
     async _getButtons() {

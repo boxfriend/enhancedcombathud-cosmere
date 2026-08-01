@@ -12,15 +12,15 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get label() {
         switch(this.actionType) {
             case 'act':
-                return "Actions";
+                return game.i18n.localize(`${MODULE_ID}.Actions.Types.Actions`);
             case 'fre':
-                return "Free Actions";
+                return game.i18n.localize(`${MODULE_ID}.Actions.Types.Free`);
             case 'rea':
-                return "Reactions";
+                return game.i18n.localize(`${MODULE_ID}.Actions.Types.Reactions`);
             case 'spe':
-                return "Special";
+                return game.i18n.localize(`${MODULE_ID}.Actions.Types.Special`);
             default:
-                return "UNKNOWN";
+                return game.i18n.localize(`${MODULE_ID}.Unknown`);
         }
     }
 
