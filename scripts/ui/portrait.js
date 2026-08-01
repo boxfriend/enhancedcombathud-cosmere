@@ -1,3 +1,5 @@
+import { MODULE_ID } from "../utilities.js";
+
 const ARGON = CONFIG.ARGON;
 
 export default class CosmerePortrait extends ARGON.PORTRAIT.PortraitPanel {
@@ -45,7 +47,7 @@ export default class CosmerePortrait extends ARGON.PORTRAIT.PortraitPanel {
             buttons.push({
                 id: "toggle-speed",
                 icon: "fas fa-stopwatch",
-                label: "Toggle Turn Speed",
+                label: game.i18n.localize(`${MODULE_ID}.PortraitHud.TurnSpeed`),
                 onClick: (e) => {
                     const combatant = game.combat.getCombatantsByActor(this.actor)[0];
                     combatant?.toggleTurnSpeed();
@@ -56,13 +58,13 @@ export default class CosmerePortrait extends ARGON.PORTRAIT.PortraitPanel {
         buttons.push({
             id: "open-sheet",
             icon: "fas fa-suitcase",
-            label: "Open Character Sheet",
+            label: game.i18n.localize(`${MODULE_ID}.PortraitHud.CharSheet`),
             onClick: (e) => this.actor.sheet.render(true),
         },
         {
             id: "toggle-minimize",
             icon: "fas fa-caret-down",
-            label: "Minimize",
+            label: game.i18n.localize(`${MODULE_ID}.PortraitHud.Minimize`),
             onClick: (e) => ui.ARGON.toggleMinimize(),
         });
 

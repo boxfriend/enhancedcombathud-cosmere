@@ -44,8 +44,8 @@ Hooks.on("renderSettingsConfig", (app, html, data) => {
     html = html instanceof jQuery ? html[0] : html;
     const thing = html.querySelector(`section[data-tab=${MODULE_ID}]`);
     thing.insertAdjacentHTML("beforeend",
-        `<button id="${MODULE_ID}.refresh" title="Refreshes all cached actions and compendiums." style="flex:1"><i class="fa-solid fa-arrows-rotate"></i><label>Refresh All Actions</label></button>
-         <p class="notes">Refreshes all cached compendiums and actions. Useful if you have added or removed actions or compendiums and want to refresh Argon.</p>                
+        `<button id="${MODULE_ID}.refresh" title="${game.i18n.localize(`${MODULE_ID}.Settings.RefreshAll.Hint`)}" style="flex:1"><i class="fa-solid fa-arrows-rotate"></i><label>${game.i18n.localize(`${MODULE_ID}.Settings.RefreshAll.Name`)}</label></button>
+         <p class="notes">${game.i18n.localize(`${MODULE_ID}.Settings.RefreshAll.Long`)}</p>                
     `);
     html.querySelector(`button[id="${MODULE_ID}.refresh"]`).addEventListener("click", (event) => { refreshAllActions().then(() => ui.ARGON.refresh()); });
 });

@@ -110,32 +110,32 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
         const unhidden = this.actions.filter(notHidden);
         const actions = [
             {
-                label: 'Weapon',
+                label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Weapons'),
                 buttons: unhidden.filter(action => action.parent?.type === 'weapon' && this.#validEquip(action.parent))
                     .map(toButton)
             },
             {
-                label: 'Talents',
+                label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Talents'),
                 buttons: unhidden.filter(action => action.parent?.type === 'talent')
                     .map(toButton)
             },
             {
-                label: 'Powers',
+                label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Powers'),
                 buttons: unhidden.filter(action => action.parent?.type === 'power')
                     .map(toButton)
             },
             {
-                label: 'Basic',
+                label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Basic'),
                 buttons: unhidden.filter(action => !action.parent && action.system?.type === 'basic')
                     .map(toButton)
             },
             {
-                label: 'Equipment',
+                label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Equipment'),
                 buttons: unhidden.filter(action => action.parent?.type === 'equipment' && this.#validEquip(action.parent))
                     .map(toButton)
             },
             {
-                label: 'Macros',
+                label: game.i18n.localize('enhancedcombathud-cosmere-rpg.Actions.Groups.Macros'),
                 buttons: unhidden.filter(action => !action.parent && (action.type === 'script' || action.type === 'chat'))
                     .map((action) => new RemovableMacroButton({ macro: action, parent: this.label }))
             }
