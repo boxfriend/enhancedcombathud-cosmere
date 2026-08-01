@@ -14,7 +14,8 @@
                 "Powers": "Powers",
                 "Basic": "Basic",
                 "Equipment": "Equipment",
-                "Macros": "Macros"
+                "Macros": "Macros",
+                "Other": "Other"
             }
         },
         "PortraitHud": {
