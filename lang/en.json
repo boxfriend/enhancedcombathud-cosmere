@@ -15,7 +15,8 @@
                 "Basic": "Basic",
                 "Equipment": "Equipment",
                 "Macros": "Macros",
-                "Other": "Other"
+                "Other": "Other",
+                "Adversary": "Adversary"
             }
         },
         "PortraitHud": {
