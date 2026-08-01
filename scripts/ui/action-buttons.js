@@ -50,7 +50,17 @@ export class RemovableMacroButton extends BUTTONS.MacroButton {
             const macros = this.actor.getFlag(MODULE_ID, `macros.${this.parentLabel}`) || [];
             macros.splice(macros.indexOf(macro.id), 1);
             await this.actor.setFlag(MODULE_ID, `macros.${this.parentLabel}`, macros);
-            await this.parent.parent.render();
+
+            // we need to make sure to target the panel button which is several layers higher
+            let parent = this.parent;
+            while(parent && !(parent instanceof CosmereButtonPanelButton))
+                parent = parent.parent;
+
+            if(parent){
+                
+                await parent._renderInner();
+            }
+                
         }
     }
 }
@@ -121,21 +131,24 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
     }
 
     async _onDrop(event) {
-        console.log("drop", event, this);
+
         try {
             event.preventDefault();
             event.stopPropagation();
             const data = JSON.parse(event.dataTransfer.getData("text/plain"));
-            console.log(data, event.dataTransfer.getData("text/plain"))
             if (data?.type !== "Macro") return;
             const macro = game.macros.get(data.uuid.replace("Macro.", ""));
-            console.log(macro);
             if(macro) {
                 const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
+                
+                if(macros.includes(macro.id)) return;
+
                 macros.push(macro.id);
-                console.log(macros);
                 await this.actor.setFlag(MODULE_ID, `macros.${this.label}`, macros);
-                await this.panel.render();
+                // push the macro into the array because we don't want to trigger the render for all panels
+                // so the action isn't getting put into the array otherwise
+                this.actions.push(macro);
+                await this._renderInner();
             }
         } catch (error) { console.log(error); }
     }
@@ -154,47 +167,85 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
                 return "UNKNOWN";
         }
     }
+
+    get icon() {
+        switch(this.actionType) {
+            case 'act':
+                switch(this.cost) {
+                    case 1:
+                        return "modules/enhancedcombathud-cosmere-rpg/icons/one_action.svg"
+                    case 2:
+                        return "modules/enhancedcombathud-cosmere-rpg/icons/two_action.svg"
+                    case 3:
+                        return "modules/enhancedcombathud-cosmere-rpg/icons/three_action.svg"
+                }
+            case 'fre':
+                return "modules/enhancedcombathud-cosmere-rpg/icons/free_action.svg";
+            case 'rea':
+                return "modules/enhancedcombathud-cosmere-rpg/icons/reaction.svg";
+            case 'spe':
+                return "modules/enhancedcombathud-cosmere-rpg/icons/special_action.svg";
+            default:
+                return "UNKNOWN";
+        }
+    }
     
+    #validEquip(item) {
+        const system = item.system;
+        return system.alwaysEquipped 
+            // Not equippable at all
+            || !system.equippableEnabled
+            // Equippable and actually equipped
+            || system.equipped;
+
+    }
+
     async _getPanel() {
-        const cost = this.cost;
-        return new CONFIG.ARGON.MAIN.BUTTON_PANELS.ButtonPanel({ id: this.label, buttons: this.actions.map((item) => {
-            if(item.type === "script" || item.type === "chat") {
-                return new RemovableMacroButton({
-                        macro: item,
-                        inActionPanel: true,
-                        parent: this.label,
-                    });
-            } else {
-                return new CosmereItemButton({ item, cost }) 
+        const toButton = (item) => new CosmereItemButton({item, cost: this.cost})
+
+        const notHidden = (item) => {
+            const hidden = this.actor.getFlag(MODULE_ID, "hiddenItems") || [];
+            return !hidden.includes(item.id);
+        };
+
+        const unhidden = this.actions.filter(notHidden);
+        const actions = [
+            {
+                label: 'Weapon',
+                buttons: unhidden.filter(action => action.parent?.type === 'weapon' && this.#validEquip(action.parent))
+                    .map(toButton)
+            },
+            {
+                label: 'Talents',
+                buttons: unhidden.filter(action => action.parent?.type === 'talent')
+                    .map(toButton)
+            },
+            {
+                label: 'Powers',
+                buttons: unhidden.filter(action => action.parent?.type === 'power')
+                    .map(toButton)
+            },
+            {
+                label: 'Basic',
+                buttons: unhidden.filter(action => !action.parent && action.system?.type === 'basic')
+                    .map(toButton)
+            },
+            {
+                label: 'Equipment',
+                buttons: unhidden.filter(action => action.parent?.type === 'equipment' && this.#validEquip(action.parent))
+                    .map(toButton)
+            },
+            {
+                label: 'Macros',
+                buttons: unhidden.filter(action => !action.parent && (action.type === 'script' || action.type === 'chat'))
+                    .map((action) => new RemovableMacroButton({ macro: action, parent: this.label }))
             }
-        })});
-    }
-}
+        ];
 
-export class CosmereButtonPanel extends CONFIG.ARGON.MAIN.BUTTON_PANELS.ButtonPanel {
-
-    get template() { return new CONFIG.ARGON.MAIN.BUTTON_PANELS.ButtonPanel().template; }
-    
-    async activateListeners(html) {
-        super.activateListeners(html);
-        this.element.addEventListener("drop", this._onDrop.bind(this));
-
-    }
-
-    async _onDrop(event) {
-        console.log("drop", event);
-        try {
-            event.preventDefault();
-            event.stopPropagation();
-            const data = JSON.parse(event.dataTransfer.getData("text/plain"));
-            if (data?.type !== "Macro") return;
-            const macro = game.macros.get(data.uuid.replace("Macro.", ""));
-            if(macro) {
-                const macros = this.actor.getFlag(MODULE_ID, `macros.${this.id}`) || [];
-                macros.push(macro.id);
-                await this.actor.setFlag(MODULE_ID, `macros.${this.id}`, macros);
-                await this.render();
-            }
-        } catch (error) { console.log(error); }
+        return new CONFIG.ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanel({ id: this.label, 
+            accordionPanelCategories: actions.filter(x => x.buttons?.length > 0).map(({label, buttons}) =>
+                new CONFIG.ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanelCategory({ label, buttons })
+            )
+        });
     }
 }
