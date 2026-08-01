@@ -10,7 +10,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
     get label() {
         switch(this.actionType) {
             case 'act':
-        return "Actions";
+                return "Actions";
             case 'fre':
                 return "Free Actions";
             case 'rea':
@@ -27,12 +27,12 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
 
         if(this.actionType === 'act') {
             for(let i = 1; i <= 3; i++) {
-                const actions = this.#getActionButton('act', i);
+                const actions = this.#getActions('act', i);
                 buttons.push(new CosmereButtonPanelButton(actions, i, 'act'));
             }
         }
         else {
-            buttons.push(new CosmereButtonPanelButton(this.#getActions(this.actionType, 0), 0, his.actionType));
+            buttons.push(new CosmereButtonPanelButton(this.#getActions(this.actionType, 0), 0, this.actionType));
         }
 
         if(game.settings.get(MODULE_ID, "showEmptyPanel"))
@@ -83,7 +83,7 @@ export default class CosmereActionHUD extends CONFIG.ARGON.MAIN.ActionPanel {
 
         actions = this.#filterDuplicates(actions);
         const macroCost = this.#getMacroCost(actionType, actionCost);
-        const macros = this.actor.getFlag(MODULE_ID, `macros.${oldLabel}`) || [];
+        const macros = this.actor.getFlag(MODULE_ID, `macros.${macroCost}`) || [];
         actions.push(...macros.map(id => game.macros.get(id)));
 
         return actions;
