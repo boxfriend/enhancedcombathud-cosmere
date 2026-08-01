@@ -17,17 +17,15 @@ Hooks.once("argonInit", (CoreHUD) => {
     const mainPanels = [
         CosmereStrikeHUD,
         CosmereActionHUD,
-        // class extends CosmereActionHUD { get actionCost() { return 2; } },
-        // class extends CosmereActionHUD { get actionCost() { return 3; } },
-        // class extends CosmereActionHUD { get actionType() { return 'fre'; } },
-        // class extends CosmereActionHUD { get actionType() { return 'rea'; } },
-        ];
+        class extends CosmereActionHUD { get actionType() { return 'fre'; } },
+        class extends CosmereActionHUD { get actionType() { return 'rea'; } },
+    ];
 
-    // const includeSpeActions = game.settings.get(MODULE_ID, "includeSpePanel");
-    // if(includeSpeActions)
-    //     mainPanels.push(class extends CosmereActionHUD { get actionType() { return 'spe'; } })
+    const includeSpeActions = game.settings.get(MODULE_ID, "includeSpePanel");
+    if(includeSpeActions)
+        mainPanels.push(class extends CosmereActionHUD { get actionType() { return 'spe'; } })
 
-    const includePassTurn = game.settings.get(MODULE_ID, "includePassTurn"); //TODO: Make this a setting
+    const includePassTurn = game.settings.get(MODULE_ID, "includePassTurn");
     if(includePassTurn)
         mainPanels.push(CoreHUD.ARGON.PREFAB.PassTurnPanel);
 
