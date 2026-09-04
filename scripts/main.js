@@ -45,7 +45,31 @@ Hooks.on("renderSettingsConfig", (app, html, data) => {
     const thing = html.querySelector(`section[data-tab=${MODULE_ID}]`);
     thing.insertAdjacentHTML("beforeend",
         `<button id="${MODULE_ID}.refresh" title="${game.i18n.localize(`${MODULE_ID}.Settings.RefreshAll.Hint`)}" style="flex:1"><i class="fa-solid fa-arrows-rotate"></i><label>${game.i18n.localize(`${MODULE_ID}.Settings.RefreshAll.Name`)}</label></button>
-         <p class="notes">${game.i18n.localize(`${MODULE_ID}.Settings.RefreshAll.Long`)}</p>                
+         <p class="notes">${game.i18n.localize(`${MODULE_ID}.Settings.RefreshAll.Long`)}</p>
     `);
     html.querySelector(`button[id="${MODULE_ID}.refresh"]`).addEventListener("click", (event) => { refreshAllActions().then(() => ui.ARGON.refresh()); });
+});
+
+
+Hooks.on("boxfriend-SetChangesComplete", () => {
+    for(const mainComponent of ui.ARGON.components.main){
+        for(const button of mainComponent.buttons){
+            if(typeof button === 'CosmereButtonPanelButton'){
+                button._renderInner();
+            }
+        }
+    }
+});
+
+Hooks.on("updateItem", (item) => {
+    console.log("Update item fired with item: ");
+    console.log(item);
+    if(item.actor.id !== ui.ARGON?._actor?.id) return;
+    for(const mainComponent of ui.ARGON.components.main){
+        for(const button of mainComponent.buttons){
+            if(typeof button === 'CosmereButtonPanelButton'){
+                button.refreshIfValidAction(item);
+            }
+        }
+    }
 });
