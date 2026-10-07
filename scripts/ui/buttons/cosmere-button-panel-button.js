@@ -11,16 +11,15 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
         this.actions = actions;
         this.cost = cost;
         this.actionType = type;
+    }
 
-        Hooks.on('boxfriend-SetChangesComplete', () => this._renderInner());
-        Hooks.on('updateItem', (item) => {
-            const validAction = (item) => item.system.activation?.cost?.type === this.actionType 
-                && item.system.activation?.cost?.value === this.cost
-                && !item.system.id.startsWith('strike-');
-            if((item.type === 'action' && validAction(item)) || item.actions?.find(validAction)) {
-                this._renderInner();
-            }
-        });
+    refreshIfValidAction(item) {
+        const validAction = (item) => item.system.activation?.cost?.type === this.actionType
+            && item.system.activation?.cost?.value === this.cost
+            && !item.system.id.startsWith('strike-');
+        if((item.type === 'action' && validAction(item)) || item.actions?.find(validAction)) {
+            this._renderInner();
+        }
     }
 
     async activateListeners(html) {
@@ -39,7 +38,7 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
             const macro = game.macros.get(data.uuid.replace("Macro.", ""));
             if(macro) {
                 const macros = this.actor.getFlag(MODULE_ID, `macros.${this.label}`) || [];
-                
+
                 if(macros.includes(macro.id)) return;
 
                 macros.push(macro.id);
@@ -88,10 +87,10 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
                 return "UNKNOWN";
         }
     }
-    
+
     #validEquip(item) {
         const system = item.system;
-        return system.alwaysEquipped 
+        return system.alwaysEquipped
             // Not equippable at all
             || !system.equippableEnabled
             // Equippable and actually equipped
@@ -151,7 +150,7 @@ export class CosmereButtonPanelButton extends BUTTONS.ButtonPanelButton {
             }
         ];
 
-        return new ACCORDION.AccordionPanel({ id: this.label, 
+        return new ACCORDION.AccordionPanel({ id: this.label,
             accordionPanelCategories: actions.filter(x => x.buttons?.length > 0).map(({label, buttons}) =>
                 new ACCORDION.AccordionPanelCategory({ label, buttons })
             )
